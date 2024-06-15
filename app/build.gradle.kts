@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.google.hilt)
+    kotlin("kapt")
+    alias(libs.plugins.google.gms)
 }
 
 android {
@@ -50,6 +53,7 @@ android {
 }
 
 dependencies {
+    //Core
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -58,6 +62,19 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    //Hilt
+    implementation(libs.google.dagger)
+    kapt(libs.google.dagger.kapt)
+    //SplashScreen
+    implementation(libs.androidx.core.splashscreen)
+    //Navigation
+    implementation(libs.androidx.navigation)
+    implementation(libs.androidx.navigation.hilt)
+    //Firebase
+    implementation(platform(libs.google.firebase.bom))
+    implementation(libs.google.firebase.common)
+    implementation(libs.google.firebase.auth)
+    //Tests
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

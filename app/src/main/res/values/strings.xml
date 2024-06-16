@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ФСШ Слуцкого</string>
+    <string name="welcome_title_text">Регистрация</string>
+    <string name="welcome_edittext_label">Введите Ваш номер телефона</string>
+    <string name="welcome_countrycode_text">+7</string>
+    <string name="welcome_button_text">Далее</string>
 </resources>

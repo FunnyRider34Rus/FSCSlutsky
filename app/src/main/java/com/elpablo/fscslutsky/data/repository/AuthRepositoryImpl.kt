@@ -1,4 +1,4 @@
-package com.elpablo.fscslutsky.data
+package com.elpablo.fscslutsky.data.repository
 
 import com.elpablo.fscslutsky.domain.AuthRepository
 import com.google.firebase.auth.FirebaseAuth

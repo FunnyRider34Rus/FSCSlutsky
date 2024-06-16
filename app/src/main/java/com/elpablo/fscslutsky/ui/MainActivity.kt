@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen().setKeepOnScreenCondition { viewModel.isLoading.value }
-        enableEdgeToEdge()
+        //enableEdgeToEdge()
         setContent {
             FSCSlutskyTheme {
                 FSCSlutskyApp(startDestination = viewModel.startDestination.value)

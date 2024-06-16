@@ -1,6 +1,6 @@
 package com.elpablo.fscslutsky.di
 
-import com.elpablo.fscslutsky.data.AuthRepositoryImpl
+import com.elpablo.fscslutsky.data.repository.AuthRepositoryImpl
 import com.elpablo.fscslutsky.domain.AuthRepository
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module

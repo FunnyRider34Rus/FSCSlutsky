@@ -5,9 +5,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.elpablo.fscslutsky.core.navigation.Graph
-import com.elpablo.fscslutsky.core.navigation.Screen
 import com.elpablo.fscslutsky.domain.AuthRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 class MainActivityViewModel @Inject constructor(repository: AuthRepository) : ViewModel() {

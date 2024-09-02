@@ -14,8 +14,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.elpablo.fscslutsky.R
+import com.elpablo.fscslutsky.core.theme.FSCSlutskyTheme
 
 @Composable
 fun FSCSlutskyTitle(
@@ -52,5 +54,13 @@ fun FSCSlutskyTitle(
                 .align(Alignment.CenterHorizontally),
             color = MaterialTheme.colorScheme.primary
         )
+    }
+}
+
+@Preview(showBackground = true, device = "id:pixel_5")
+@Composable
+private fun FSCSlutskyTitlePreview() {
+    FSCSlutskyTheme {
+        FSCSlutskyTitle(text = stringResource(R.string.welcome_title_text))
     }
 }

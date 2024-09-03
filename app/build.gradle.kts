@@ -43,7 +43,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.14"
     }
     packaging {
         resources {
@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
@@ -72,8 +73,8 @@ dependencies {
     implementation(libs.androidx.navigation.hilt)
     //Firebase
     implementation(platform(libs.google.firebase.bom))
-    implementation(libs.google.firebase.common)
-    implementation(libs.google.firebase.auth)
+    implementation(libs.firebase.common.ktx)
+    implementation(libs.google.firebase.firestore)
     //Tests
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

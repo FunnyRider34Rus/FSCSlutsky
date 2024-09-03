@@ -3,6 +3,7 @@ package com.elpablo.fscslutsky.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
@@ -20,7 +21,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen().setKeepOnScreenCondition { viewModel.isLoading.value }
-        //enableEdgeToEdge()
+        enableEdgeToEdge()
         setContent {
             FSCSlutskyTheme {
                 FSCSlutskyApp(startDestination = viewModel.startDestination.value)

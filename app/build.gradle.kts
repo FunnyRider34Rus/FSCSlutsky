@@ -75,6 +75,10 @@ dependencies {
     implementation(platform(libs.google.firebase.bom))
     implementation(libs.firebase.common.ktx)
     implementation(libs.google.firebase.firestore)
+    //Coil
+    implementation(libs.coil)
+    //Google Icons
+    implementation(libs.google.icons)
     //Tests
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

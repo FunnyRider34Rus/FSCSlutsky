@@ -10,12 +10,15 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.elpablo.fscslutsky.core.components.FSCSlutckyBottomBar
 import com.elpablo.fscslutsky.ui.dashboard.DashboardScreen
 import com.elpablo.fscslutsky.ui.dashboard.DashboardViewModel
 
 @Composable
 fun SetupNavGraph(navController: NavHostController, startDestination: String) {
-    Scaffold { paddingValues ->
+    Scaffold(
+        bottomBar = { FSCSlutckyBottomBar(navController = navController) }
+    ) { paddingValues ->
         val modifier = Modifier.padding(paddingValues)
         NavHost(
             navController = navController,
@@ -26,7 +29,13 @@ fun SetupNavGraph(navController: NavHostController, startDestination: String) {
                 val state by viewModel.viewState.collectAsStateWithLifecycle()
                 DashboardScreen(modifier = modifier, state = state, onEvent = viewModel::onEvent)
             }
-            composable(route = Screen.SETTINGS.route) {
+            composable(route = Screen.MATCHES.route) {
+
+            }
+            composable(route = Screen.SHOP.route) {
+
+            }
+            composable(route = Screen.PROFILE.route) {
 
             }
         }

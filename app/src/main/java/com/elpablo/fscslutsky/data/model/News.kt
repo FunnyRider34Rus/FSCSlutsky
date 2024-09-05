@@ -6,6 +6,5 @@ data class News(
     val title: String? = null,
     val body: String? = null,
     val images: List<String?>? = null,
-    val date: Timestamp? = null,
-    val isHorizontal: Boolean? = null
+    val date: Timestamp? = null
 )

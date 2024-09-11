@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface NewsRepository {
     suspend fun getNews(): Flow<Response<List<News>>>
+    fun getNewsByID(id: String?): Flow<Response<News>>
 }

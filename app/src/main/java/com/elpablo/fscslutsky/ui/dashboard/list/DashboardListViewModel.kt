@@ -1,4 +1,4 @@
-package com.elpablo.fscslutsky.ui.dashboard
+package com.elpablo.fscslutsky.ui.dashboard.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,9 +12,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DashboardViewModel @Inject constructor(private val repository: NewsRepository): ViewModel() {
-    private val _viewState = MutableStateFlow(DashboardViewState())
-    val viewState: StateFlow<DashboardViewState> = _viewState
+class DashboardListViewModel @Inject constructor(private val repository: NewsRepository): ViewModel() {
+    private val _viewState = MutableStateFlow(DashboardListViewState())
+    val viewState: StateFlow<DashboardListViewState> = _viewState
 
     init {
         getNews()
@@ -42,7 +42,11 @@ class DashboardViewModel @Inject constructor(private val repository: NewsReposit
         }
     }
 
-    fun onEvent(event: DashboardEvent) = viewModelScope.launch(Dispatchers.IO) {
+    fun onEvent(event: DashboardListEvent) = viewModelScope.launch(Dispatchers.IO) {
+        when (event) {
+            is DashboardListEvent.ContentClick -> {
 
+            }
+        }
     }
 }

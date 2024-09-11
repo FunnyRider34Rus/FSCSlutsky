@@ -11,8 +11,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.elpablo.fscslutsky.core.components.FSCSlutckyBottomBar
-import com.elpablo.fscslutsky.ui.dashboard.DashboardScreen
-import com.elpablo.fscslutsky.ui.dashboard.DashboardViewModel
+import com.elpablo.fscslutsky.ui.dashboard.detail.DashboardDetailScreen
+import com.elpablo.fscslutsky.ui.dashboard.detail.DashboardDetailViewModel
+import com.elpablo.fscslutsky.ui.dashboard.list.DashboardListScreen
+import com.elpablo.fscslutsky.ui.dashboard.list.DashboardListViewModel
 
 @Composable
 fun SetupNavGraph(navController: NavHostController, startDestination: String) {
@@ -24,10 +26,25 @@ fun SetupNavGraph(navController: NavHostController, startDestination: String) {
             navController = navController,
             startDestination = startDestination
         ) {
-            composable(route = Screen.DASHBOARD.route) {
-                val viewModel = hiltViewModel<DashboardViewModel>()
+            composable(route = Screen.DASHBOARDLIST.route) {
+                val viewModel = hiltViewModel<DashboardListViewModel>()
                 val state by viewModel.viewState.collectAsStateWithLifecycle()
-                DashboardScreen(modifier = modifier, state = state, onEvent = viewModel::onEvent)
+                DashboardListScreen(modifier = modifier, state = state, onNavigate = { id ->
+                    navController.navigate(Screen.DASHBOARDDETAIL.route+"/$id")
+                })
+            }
+            composable(route = Screen.DASHBOARDDETAIL.route + "/{id}") { navEntry ->
+                val id = navEntry.arguments?.getString("id")
+                val viewModel = hiltViewModel<DashboardDetailViewModel>()
+                val state by viewModel.viewState.collectAsStateWithLifecycle()
+                DashboardDetailScreen(
+                    modifier = modifier,
+                    viewModel = viewModel,
+                    state = state,
+                    id =id,
+                    onNavigateBack = { navController.popBackStack() }
+                )
+
             }
             composable(route = Screen.MATCHES.route) {
 

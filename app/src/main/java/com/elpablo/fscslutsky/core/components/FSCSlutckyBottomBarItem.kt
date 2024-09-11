@@ -29,7 +29,7 @@ sealed class FSCSlutckyBottomBarItem(
     val icon: ImageVector
 ) {
     data object Dashboard : FSCSlutckyBottomBarItem(
-        route = Screen.DASHBOARD.route,
+        route = Screen.DASHBOARDLIST.route,
         label = R.string.bottom_bar_dashboard_label,
         icon = Icons.Filled.Dashboard
     )

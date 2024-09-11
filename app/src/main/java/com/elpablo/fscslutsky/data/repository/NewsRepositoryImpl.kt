@@ -1,8 +1,11 @@
 package com.elpablo.fscslutsky.data.repository
 
+import android.util.Log
 import com.elpablo.fscslutsky.core.utils.FIRESTORE_NODE_NEWS
 import com.elpablo.fscslutsky.core.utils.FIRESTORE_NODE_NEWS_TIMESTAMP
 import com.elpablo.fscslutsky.core.utils.Response
+import com.elpablo.fscslutsky.core.utils.Response.Failure
+import com.elpablo.fscslutsky.core.utils.Response.Success
 import com.elpablo.fscslutsky.data.model.News
 import com.elpablo.fscslutsky.domain.repoitory.NewsRepository
 import com.google.firebase.firestore.FirebaseFirestore
@@ -17,15 +20,29 @@ class NewsRepositoryImpl @Inject constructor (private val firestore: FirebaseFir
         val listener = firestore
             .collection(FIRESTORE_NODE_NEWS)
             .orderBy(FIRESTORE_NODE_NEWS_TIMESTAMP, Query.Direction.DESCENDING)
-            .addSnapshotListener {value, error ->
+            .addSnapshotListener { value, error ->
                 val response = if (value != null) {
                     val content = value.toObjects(News::class.java)
-                    Response.Success(content)
+                    Success(content)
                 } else {
-                    Response.Failure(error)
+                    Failure(error)
                 }
                 trySend(response)
             }
         awaitClose { listener.remove() }
+    }
+
+    override fun getNewsByID(id: String?): Flow<Response<News>> = callbackFlow {
+        Log.d("NewsDebug", id.toString())
+        val docRef = id?.let { id -> firestore.collection(FIRESTORE_NODE_NEWS).document(id) }
+        docRef?.get()?.addOnCompleteListener { task ->
+            val response = if (task.isSuccessful) {
+                Success(task.result.toObject(News::class.java))
+            } else {
+                Failure(task.exception)
+            }
+            trySend(response)
+        }
+        awaitClose { }
     }
 }

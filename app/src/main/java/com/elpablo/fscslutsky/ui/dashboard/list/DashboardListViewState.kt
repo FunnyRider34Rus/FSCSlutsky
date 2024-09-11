@@ -1,8 +1,8 @@
-package com.elpablo.fscslutsky.ui.dashboard
+package com.elpablo.fscslutsky.ui.dashboard.list
 
 import com.elpablo.fscslutsky.data.model.News
 
-data class DashboardViewState(
+data class DashboardListViewState(
     val content: List<News> = emptyList(),
     val isLoading: Boolean = false,
     val isError: Boolean = false,

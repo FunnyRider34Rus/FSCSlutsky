@@ -64,7 +64,7 @@ fun FSCSlutckyBottomBar(navController: NavController) {
 
     if (bottomBarDestination) {
         NavigationBar(
-            containerColor = Color.White
+            containerColor = MaterialTheme.colorScheme.background
         ) {
             bottomBarScreens.forEach { screen ->
                 AddItem(

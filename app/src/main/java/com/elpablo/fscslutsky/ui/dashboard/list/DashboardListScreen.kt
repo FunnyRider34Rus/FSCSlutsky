@@ -8,20 +8,16 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.elpablo.fscslutsky.R
 import com.elpablo.fscslutsky.core.utils.timestampToDate
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardListScreen(
     modifier: Modifier,
@@ -29,20 +25,10 @@ fun DashboardListScreen(
     onNavigate: (String?) -> Unit
 ) {
     Column(modifier = modifier) {
-        TopAppBar(
-            title = {
-                Text(
-                    text = stringResource(R.string.bottom_bar_dashboard_label),
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
-        )
         LazyColumn(
             modifier = Modifier
-                .background(color = MaterialTheme.colorScheme.tertiary)
                 .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            contentPadding = PaddingValues(top = 8.dp, bottom = 8.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             for (news in state.content) {
                 item {

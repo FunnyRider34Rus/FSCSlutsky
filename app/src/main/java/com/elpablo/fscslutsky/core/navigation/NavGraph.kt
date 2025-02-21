@@ -17,14 +17,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.elpablo.fscslutsky.core.components.FSCSSlutckyTitle
 import com.elpablo.fscslutsky.core.components.FSCSlutckyBottomBar
-import com.elpablo.fscslutsky.ui.dashboard.detail.DashboardDetailScreen
-import com.elpablo.fscslutsky.ui.dashboard.detail.DashboardDetailViewModel
 import com.elpablo.fscslutsky.ui.dashboard.list.DashboardListScreen
 import com.elpablo.fscslutsky.ui.dashboard.list.DashboardListViewModel
 
 @Composable
 fun SetupNavGraph(navController: NavHostController, startDestination: String) {
     Scaffold(
+        modifier = Modifier.background(MaterialTheme.colorScheme.background),
         topBar = { FSCSSlutckyTitle(navController = navController) },
         bottomBar = { FSCSlutckyBottomBar(navController = navController) }
     ) { paddingValues ->
@@ -60,30 +59,19 @@ fun SetupNavGraph(navController: NavHostController, startDestination: String) {
             composable(route = Screen.DASHBOARDLIST.route) {
                 val viewModel = hiltViewModel<DashboardListViewModel>()
                 val state by viewModel.viewState.collectAsStateWithLifecycle()
-                DashboardListScreen(modifier = modifier, state = state, onNavigate = { id ->
-                    navController.navigate(Screen.DASHBOARDDETAIL.route+"/$id")
-                })
-            }
-            composable(route = Screen.DASHBOARDDETAIL.route + "/{id}") { navEntry ->
-                val id = navEntry.arguments?.getString("id")
-                val viewModel = hiltViewModel<DashboardDetailViewModel>()
-                val state by viewModel.viewState.collectAsStateWithLifecycle()
-                DashboardDetailScreen(
+                DashboardListScreen(
                     modifier = modifier,
-                    viewModel = viewModel,
-                    state = state,
-                    id = id
+                    state = state
                 )
-
             }
             composable(route = Screen.MATCHES.route,
-                content = { Box(modifier = Modifier.background(MaterialTheme.colorScheme.tertiary)) }
+                content = { Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) }
             )
             composable(route = Screen.SHOP.route,
-                content = { Box(modifier = Modifier.background(MaterialTheme.colorScheme.tertiary)) }
+                content = { Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) }
             )
             composable(route = Screen.PROFILE.route,
-                content = { Box(modifier = Modifier.background(MaterialTheme.colorScheme.tertiary)) }
+                content = { Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) }
             )
         }
     }

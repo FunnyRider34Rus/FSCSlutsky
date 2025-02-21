@@ -1,6 +1,5 @@
 package com.elpablo.fscslutsky.data.repository
 
-import android.util.Log
 import com.elpablo.fscslutsky.core.utils.FIRESTORE_NODE_NEWS
 import com.elpablo.fscslutsky.core.utils.FIRESTORE_NODE_NEWS_TIMESTAMP
 import com.elpablo.fscslutsky.core.utils.Response
@@ -33,7 +32,6 @@ class NewsRepositoryImpl @Inject constructor (private val firestore: FirebaseFir
     }
 
     override fun getNewsByID(id: String?): Flow<Response<News>> = callbackFlow {
-        Log.d("NewsDebug", id.toString())
         val docRef = id?.let { id -> firestore.collection(FIRESTORE_NODE_NEWS).document(id) }
         docRef?.get()?.addOnCompleteListener { task ->
             val response = if (task.isSuccessful) {

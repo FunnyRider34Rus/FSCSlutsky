@@ -1,5 +1,6 @@
 package com.elpablo.fscslutsky.core.utils
 
+import androidx.compose.foundation.lazy.LazyListState
 import com.google.firebase.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
@@ -9,3 +10,5 @@ fun timestampToDate(timestamp: Timestamp?): String? {
     val simpleDateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
     return simpleDateFormat.format(long)
 }
+
+fun LazyListState.isScrolledToEnd() = layoutInfo.visibleItemsInfo.lastOrNull()?.index == layoutInfo.totalItemsCount-1

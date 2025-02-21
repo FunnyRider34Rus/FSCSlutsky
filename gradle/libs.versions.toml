@@ -1,21 +1,22 @@
 [versions]
-agp = "8.2.0"
+agp = "8.5.2"
 kotlin = "1.9.24"
-coreKtx = "1.13.1"
+coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
-lifecycleRuntimeKtx = "2.8.5"
-activityCompose = "1.9.2"
-composeBom = "2024.09.00"
+lifecycleRuntimeKtx = "2.8.7"
+activityCompose = "1.10.0"
+composeBom = "2025.02.00"
 hilt = "2.51"
 splashScreen = "1.0.1"
-navigation = "2.8.0"
+navigation = "2.8.7"
 navigationHilt = "1.2.0"
-firebaseBom = "33.2.0"
+firebaseBom = "33.9.0"
 gmsServices = "4.4.2"
 firebaseCommonKtx = "21.0.0"
 coil = "2.7.0"
+autolinktext = "2.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -44,6 +45,7 @@ google-firebase-firestore = { group = "com.google.firebase", name = "firebase-fi
 firebase-common-ktx = { group = "com.google.firebase", name = "firebase-common-ktx", version.ref = "firebaseCommonKtx" }
 coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 google-icons = { group = "androidx.compose.material", name = "material-icons-extended" }
+autolinktext = { module = "sh.calvin.autolinktext:autolinktext", version.ref = "autolinktext" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

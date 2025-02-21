@@ -8,12 +8,12 @@ plugins {
 
 android {
     namespace = "com.elpablo.fscslutsky"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.elpablo.fscslutsky"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -80,6 +80,8 @@ dependencies {
     implementation(libs.coil)
     //Google Icons
     implementation(libs.google.icons)
+    //AutolinkText
+    implementation(libs.autolinktext)
     //Tests
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

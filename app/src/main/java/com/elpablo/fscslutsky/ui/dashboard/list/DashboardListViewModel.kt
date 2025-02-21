@@ -12,11 +12,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DashboardListViewModel @Inject constructor(private val repository: NewsRepository): ViewModel() {
+class DashboardListViewModel @Inject constructor(private val repository: NewsRepository) : ViewModel() {
     private val _viewState = MutableStateFlow(DashboardListViewState())
     val viewState: StateFlow<DashboardListViewState> = _viewState
+    private val isFirstRequest = true
 
     init {
+        _viewState.value = _viewState.value.copy(isLoading = true)
         getNews()
     }
 
@@ -26,16 +28,17 @@ class DashboardListViewModel @Inject constructor(private val repository: NewsRep
                 is Response.Loading -> {
                     _viewState.value = _viewState.value.copy(isLoading = true)
                 }
+
                 is Response.Failure -> {
+                    _viewState.value = _viewState.value.copy(isLoading = false)
                     _viewState.value = _viewState.value.copy(isError = true)
                     _viewState.value = _viewState.value.copy(
                         error = result.e?.localizedMessage ?: "Unexpected Error"
                     )
                 }
+
                 is Response.Success -> {
                     _viewState.value = _viewState.value.copy(isLoading = false)
-                    _viewState.value = _viewState.value.copy(isError = false)
-                    _viewState.value = _viewState.value.copy(error = "")
                     _viewState.value = _viewState.value.copy(content = result.data ?: emptyList())
                 }
             }
@@ -45,6 +48,11 @@ class DashboardListViewModel @Inject constructor(private val repository: NewsRep
     fun onEvent(event: DashboardListEvent) = viewModelScope.launch(Dispatchers.IO) {
         when (event) {
             is DashboardListEvent.ContentClick -> {
+                if (event.id != null) {
+                    _viewState.value = _viewState.value.copy(onNavigate = event.id)
+                }
+            }
+            is DashboardListEvent.NextRequest -> {
 
             }
         }

@@ -1,4 +1,4 @@
-package com.elpablo.fscslutsky.ui.dashboard.list
+package com.elpablo.fscslutsky.ui.dashboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,7 +12,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DashboardListViewModel @Inject constructor(private val repository: NewsRepository) : ViewModel() {
+class DashboardListViewModel @Inject constructor(private val repository: NewsRepository) :
+    ViewModel() {
     private val _viewState = MutableStateFlow(DashboardListViewState())
     val viewState: StateFlow<DashboardListViewState> = _viewState
     private val isFirstRequest = true
@@ -47,13 +48,17 @@ class DashboardListViewModel @Inject constructor(private val repository: NewsRep
 
     fun onEvent(event: DashboardListEvent) = viewModelScope.launch(Dispatchers.IO) {
         when (event) {
-            is DashboardListEvent.ContentClick -> {
-                if (event.id != null) {
-                    _viewState.value = _viewState.value.copy(onNavigate = event.id)
-                }
+            is DashboardListEvent.OnCardClick -> {
+                _viewState.value = _viewState.value.copy(news = event.news)
+                _viewState.value = _viewState.value.copy(showBottomSheet = true)
             }
+
             is DashboardListEvent.NextRequest -> {
 
+            }
+
+            is DashboardListEvent.BottomSheetDismiss -> {
+                _viewState.value = _viewState.value.copy(showBottomSheet = false)
             }
         }
     }

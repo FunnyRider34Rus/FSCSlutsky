@@ -17,8 +17,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.elpablo.fscslutsky.core.components.FSCSSlutckyTitle
 import com.elpablo.fscslutsky.core.components.FSCSlutckyBottomBar
-import com.elpablo.fscslutsky.ui.dashboard.list.DashboardListScreen
-import com.elpablo.fscslutsky.ui.dashboard.list.DashboardListViewModel
+import com.elpablo.fscslutsky.ui.dashboard.DashboardListScreen
+import com.elpablo.fscslutsky.ui.dashboard.DashboardListViewModel
 
 @Composable
 fun SetupNavGraph(navController: NavHostController, startDestination: String) {
@@ -61,7 +61,8 @@ fun SetupNavGraph(navController: NavHostController, startDestination: String) {
                 val state by viewModel.viewState.collectAsStateWithLifecycle()
                 DashboardListScreen(
                     modifier = modifier,
-                    state = state
+                    state = state,
+                    onEvent = viewModel::onEvent
                 )
             }
             composable(route = Screen.MATCHES.route,

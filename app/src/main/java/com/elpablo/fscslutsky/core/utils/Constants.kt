@@ -20,4 +20,4 @@ const val FIRESTORE_NODE_NEWS = "News"
 const val FIRESTORE_NODE_NEWS_TIMESTAMP = "date"
 
 //Лимит на количество item в одном запросе
-const val FIRESTORE_LIMIT_QUERY = 20
+const val FIRESTORE_LIMIT_QUERY = 5L

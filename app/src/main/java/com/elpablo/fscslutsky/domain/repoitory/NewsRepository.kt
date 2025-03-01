@@ -5,6 +5,6 @@ import com.elpablo.fscslutsky.data.model.News
 import kotlinx.coroutines.flow.Flow
 
 interface NewsRepository {
-    suspend fun getNews(): Flow<Response<List<News>>>
-    fun getNewsByID(id: String?): Flow<Response<News>>
+    suspend fun getFirstPartNews(): Flow<Response<List<News>>>
+    suspend fun getNextPartNews(): Flow<Response<List<News>>>
 }

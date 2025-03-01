@@ -16,7 +16,6 @@ class DashboardListViewModel @Inject constructor(private val repository: NewsRep
     ViewModel() {
     private val _viewState = MutableStateFlow(DashboardListViewState())
     val viewState: StateFlow<DashboardListViewState> = _viewState
-    private val isFirstRequest = true
 
     init {
         _viewState.value = _viewState.value.copy(isLoading = true)
@@ -24,23 +23,18 @@ class DashboardListViewModel @Inject constructor(private val repository: NewsRep
     }
 
     private fun getNews() = viewModelScope.launch(Dispatchers.IO) {
-        repository.getNews().collect { result ->
+        repository.getFirstPartNews().collect { result ->
             when (result) {
                 is Response.Loading -> {
                     _viewState.value = _viewState.value.copy(isLoading = true)
                 }
 
                 is Response.Failure -> {
-                    _viewState.value = _viewState.value.copy(isLoading = false)
-                    _viewState.value = _viewState.value.copy(isError = true)
-                    _viewState.value = _viewState.value.copy(
-                        error = result.e?.localizedMessage ?: "Unexpected Error"
-                    )
+                    _viewState.value = _viewState.value.copy(isLoading = false, isError = true, error = result.e?.localizedMessage ?: "Unexpected Error")
                 }
 
                 is Response.Success -> {
-                    _viewState.value = _viewState.value.copy(isLoading = false)
-                    _viewState.value = _viewState.value.copy(content = result.data ?: emptyList())
+                    result.data?.let { data -> _viewState.value = _viewState.value.copy(isLoading = false, content = data) }
                 }
             }
         }
@@ -49,16 +43,33 @@ class DashboardListViewModel @Inject constructor(private val repository: NewsRep
     fun onEvent(event: DashboardListEvent) = viewModelScope.launch(Dispatchers.IO) {
         when (event) {
             is DashboardListEvent.OnCardClick -> {
-                _viewState.value = _viewState.value.copy(news = event.news)
-                _viewState.value = _viewState.value.copy(showBottomSheet = true)
+                _viewState.value = _viewState.value.copy(news = event.news, showBottomSheet = true)
             }
 
             is DashboardListEvent.NextRequest -> {
-
+                getNextNews()
             }
 
             is DashboardListEvent.BottomSheetDismiss -> {
                 _viewState.value = _viewState.value.copy(showBottomSheet = false)
+            }
+        }
+    }
+
+    private fun getNextNews() = viewModelScope.launch(Dispatchers.IO) {
+        repository.getNextPartNews().collect { result ->
+            when (result) {
+                is Response.Loading -> {
+                    _viewState.value = _viewState.value.copy(isLoading = true)
+                }
+
+                is Response.Failure -> {
+                    _viewState.value = _viewState.value.copy(isLoading = false, isError = true, error = result.e?.localizedMessage ?: "Unexpected Error")
+                }
+
+                is Response.Success -> {
+                    result.data?.let { data -> _viewState.value = _viewState.value.copy(isLoading = false, content = _viewState.value.content + data) }
+                }
             }
         }
     }

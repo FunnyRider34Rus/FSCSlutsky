@@ -7,7 +7,6 @@ data class DashboardListViewState(
     val news: News = News(),
     val showBottomSheet: Boolean = false,
     val isLoading: Boolean = false,
-    val isRequestLoading: Boolean = false,
     val isError: Boolean = false,
     val error: String = "",
 )

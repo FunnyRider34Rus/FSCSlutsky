@@ -19,16 +19,16 @@ fun DashboardListScreen(
         modifier = modifier.padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        for (news in state.content) {
-            item {
-                DashboardListCard(
-                    news = news,
-                    onEvent = onEvent
-                )
-            }
+        items(state.content.size) { index ->
+            DashboardListCard(
+                news = state.content[index],
+                onEvent = onEvent
+            )
         }
     }
     if (state.showBottomSheet) {
-        DashboardDetailScreen(item = state.news, onDismissRequest = { onEvent(DashboardListEvent.BottomSheetDismiss) })
+        DashboardDetailScreen(
+            item = state.news,
+            onDismissRequest = { onEvent(DashboardListEvent.BottomSheetDismiss) })
     }
 }

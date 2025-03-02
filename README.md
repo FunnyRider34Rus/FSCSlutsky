@@ -6,7 +6,7 @@
 
 ## Статус проекта
 
-- [OpenSource] (https://ru.wikipedia.org/wiki/Open_source)
+- [OpenSource](https://ru.wikipedia.org/wiki/Open_source)
 
 ## Архитектура
 

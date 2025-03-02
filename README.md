@@ -8,6 +8,10 @@
 
 - [OpenSource](https://ru.wikipedia.org/wiki/Open_source)
 
+## Платформа
+
+- [Google Android](https://www.android.com/)
+
 ## Архитектура
 
 - [Modern App Architecture](https://developer.android.com/topic/architecture#recommended-app-arch)

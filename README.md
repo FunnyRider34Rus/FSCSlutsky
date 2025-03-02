@@ -12,7 +12,7 @@
 
 - [Modern App Architecture](https://developer.android.com/topic/architecture#recommended-app-arch)
 
-## Technologies
+## Технологический стэк
 
 - [Kotlin](https://kotlinlang.org)
 - [Kotlin K2 Compiler](https://kotlinlang.org/docs/k2-compiler-migration-guide.html)
@@ -23,7 +23,7 @@
 - [Coil](https://coil-kt.github.io/coil/) для работы с изображениями
 - [ExoPlayer](https://developer.android.com/media/media3/exoplayer) для воспроизведения видео материалов
 
-## License
+## Лицензия
 
 ```
 Copyright 2024 Дуюнов Павел Владимирович (https://github.com/FunnyRider34Rus).

@@ -11,7 +11,6 @@
 ## Архитектура
 
 - [Modern App Architecture](https://developer.android.com/topic/architecture#recommended-app-arch)
-- [UDF](https://developer.android.com/develop/ui/compose/architecture#udf-compose)
 
 ## Technologies
 

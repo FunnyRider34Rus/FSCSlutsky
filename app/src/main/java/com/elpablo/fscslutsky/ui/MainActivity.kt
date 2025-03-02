@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.elpablo.fscslutsky.core.navigation.SetupNavGraph
+import com.elpablo.fscslutsky.core.navigation.SnackbarProvider
 import com.elpablo.fscslutsky.core.theme.FSCSlutskyTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -24,7 +25,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FSCSlutskyTheme {
-                FSCSlutskyApp(startDestination = viewModel.startDestination.value)
+                SnackbarProvider {
+                    FSCSlutskyApp(startDestination = viewModel.startDestination.value)
+                }
             }
         }
     }

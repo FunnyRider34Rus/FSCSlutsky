@@ -3,7 +3,6 @@ package com.elpablo.fscslutsky.core.navigation
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -19,6 +18,9 @@ import com.elpablo.fscslutsky.core.components.FSCSSlutckyTitle
 import com.elpablo.fscslutsky.core.components.FSCSlutckyBottomBar
 import com.elpablo.fscslutsky.ui.dashboard.DashboardListScreen
 import com.elpablo.fscslutsky.ui.dashboard.DashboardListViewModel
+import com.elpablo.fscslutsky.ui.matches.MatchesScreen
+import com.elpablo.fscslutsky.ui.profile.ProfileScreen
+import com.elpablo.fscslutsky.ui.shop.ShopScreen
 
 @Composable
 fun SetupNavGraph(navController: NavHostController, startDestination: String) {
@@ -65,15 +67,15 @@ fun SetupNavGraph(navController: NavHostController, startDestination: String) {
                     onEvent = viewModel::onEvent
                 )
             }
-            composable(route = Screen.MATCHES.route,
-                content = { Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) }
-            )
-            composable(route = Screen.SHOP.route,
-                content = { Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) }
-            )
-            composable(route = Screen.PROFILE.route,
-                content = { Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) }
-            )
+            composable(route = Screen.MATCHES.route) {
+                MatchesScreen(modifier = modifier)
+            }
+            composable(route = Screen.SHOP.route) {
+                ShopScreen(modifier = modifier)
+            }
+            composable(route = Screen.PROFILE.route) {
+                ProfileScreen(modifier = modifier)
+            }
         }
     }
 }

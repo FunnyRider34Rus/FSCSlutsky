@@ -22,7 +22,7 @@ import com.elpablo.fscslutsky.R
 import com.elpablo.fscslutsky.core.navigation.Screen
 
 @Composable
-fun FSCSSlutckyTitle(navController: NavController) {
+fun FSCSSlutskyTitle(navController: NavController) {
     var id by remember { mutableIntStateOf(0) }
     navController.addOnDestinationChangedListener { _, destination, _ ->
         when (destination.route) {

@@ -1,4 +1,4 @@
-package com.elpablo.fscslutsky.ui.dashboard
+package com.elpablo.fscslutsky.ui.dashboard.list
 
 import com.elpablo.fscslutsky.data.model.News
 

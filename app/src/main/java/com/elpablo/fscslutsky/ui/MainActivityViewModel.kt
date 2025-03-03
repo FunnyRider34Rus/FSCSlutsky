@@ -8,7 +8,6 @@ import com.elpablo.fscslutsky.core.navigation.Screen
 import javax.inject.Inject
 
 class MainActivityViewModel @Inject constructor(): ViewModel() {
-
     private val _isLoading: MutableState<Boolean> = mutableStateOf(false)
     val isLoading: State<Boolean> = _isLoading
 

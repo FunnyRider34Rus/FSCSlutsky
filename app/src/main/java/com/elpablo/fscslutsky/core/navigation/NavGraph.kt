@@ -14,10 +14,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.elpablo.fscslutsky.core.components.FSCSSlutckyTitle
+import com.elpablo.fscslutsky.core.components.FSCSSlutskyTitle
 import com.elpablo.fscslutsky.core.components.FSCSlutckyBottomBar
-import com.elpablo.fscslutsky.ui.dashboard.DashboardListScreen
-import com.elpablo.fscslutsky.ui.dashboard.DashboardListViewModel
+import com.elpablo.fscslutsky.ui.dashboard.detail.DashboardDetailScreen
+import com.elpablo.fscslutsky.ui.dashboard.detail.DashboardDetailViewModel
+import com.elpablo.fscslutsky.ui.dashboard.list.DashboardListScreen
+import com.elpablo.fscslutsky.ui.dashboard.list.DashboardListViewModel
 import com.elpablo.fscslutsky.ui.matches.MatchesScreen
 import com.elpablo.fscslutsky.ui.profile.ProfileScreen
 import com.elpablo.fscslutsky.ui.shop.ShopScreen
@@ -26,7 +28,7 @@ import com.elpablo.fscslutsky.ui.shop.ShopScreen
 fun SetupNavGraph(navController: NavHostController, startDestination: String) {
     Scaffold(
         modifier = Modifier.background(MaterialTheme.colorScheme.background),
-        topBar = { FSCSSlutckyTitle(navController = navController) },
+        topBar = { FSCSSlutskyTitle(navController = navController) },
         bottomBar = { FSCSlutckyBottomBar(navController = navController) }
     ) { paddingValues ->
         val modifier = Modifier.padding(paddingValues)
@@ -64,8 +66,23 @@ fun SetupNavGraph(navController: NavHostController, startDestination: String) {
                 DashboardListScreen(
                     modifier = modifier,
                     state = state,
-                    onEvent = viewModel::onEvent
+                    onEvent = viewModel::onEvent,
+                    onNavigateToDetail = { id ->
+                        navController.navigate(Screen.DASHBOARDDETAIL.route+"/$id")
+                    }
                 )
+            }
+            composable(route = Screen.DASHBOARDDETAIL.route + "/{id}") { navEntry ->
+                val id = navEntry.arguments?.getString("id")
+                val viewModel = hiltViewModel<DashboardDetailViewModel>()
+                val state by viewModel.viewState.collectAsStateWithLifecycle()
+                DashboardDetailScreen(
+                    modifier = modifier,
+                    viewModel = viewModel,
+                    state = state,
+                    id =id
+                )
+
             }
             composable(route = Screen.MATCHES.route) {
                 MatchesScreen(modifier = modifier)

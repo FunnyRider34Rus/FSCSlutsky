@@ -11,7 +11,9 @@ import com.elpablo.fscslutsky.domain.repoitory.NewsRepository
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -52,5 +54,18 @@ class NewsRepositoryImpl @Inject constructor(private val firestore: FirebaseFire
         } catch (e: Exception) {
             emit(Failure(e))
         }
+    }
+
+    override suspend fun getNewsByID(id: String?): Flow<Response<News>>  = callbackFlow {
+        val docRef = id?.let { id -> firestore.collection(FIRESTORE_NODE_NEWS).document(id) }
+        docRef?.get()?.addOnCompleteListener { task ->
+            val response = if (task.isSuccessful) {
+                Success(task.result.toObject(News::class.java))
+            } else {
+                Failure(task.exception)
+            }
+            trySend(response)
+        }
+        awaitClose { }
     }
 }

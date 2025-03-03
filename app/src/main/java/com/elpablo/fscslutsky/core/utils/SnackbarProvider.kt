@@ -1,4 +1,4 @@
-package com.elpablo.fscslutsky.core.navigation
+package com.elpablo.fscslutsky.core.utils
 
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState

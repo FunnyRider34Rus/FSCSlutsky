@@ -28,27 +28,27 @@ import androidx.navigation.compose.rememberNavController
 import com.elpablo.fscslutsky.R
 import com.elpablo.fscslutsky.core.navigation.Screen
 
-sealed class FSCSlutckyBottomBarItem(
+sealed class FSCSlutskyBottomBarItem(
     val route: String,
     @StringRes val label: Int,
     val icon: ImageVector
 ) {
-    data object Dashboard : FSCSlutckyBottomBarItem(
+    data object Dashboard : FSCSlutskyBottomBarItem(
         route = Screen.DASHBOARDLIST.route,
         label = R.string.bottom_bar_dashboard_label,
         icon = Icons.Filled.Dashboard
     )
-    data object Matches : FSCSlutckyBottomBarItem(
+    data object Matches : FSCSlutskyBottomBarItem(
         route = Screen.MATCHES.route,
         label = R.string.bottom_bar_matches_label,
         icon = Icons.Filled.SportsSoccer
     )
-    data object Shop : FSCSlutckyBottomBarItem(
+    data object Shop : FSCSlutskyBottomBarItem(
         route = Screen.SHOP.route,
         label = R.string.bottom_bar_shop_label,
         icon = Icons.Default.ShoppingCart
     )
-    data object Profile : FSCSlutckyBottomBarItem(
+    data object Profile : FSCSlutskyBottomBarItem(
         route = Screen.PROFILE.route,
         label = R.string.bottom_bar_profile_label,
         icon = Icons.Default.Person
@@ -58,10 +58,10 @@ sealed class FSCSlutckyBottomBarItem(
 @Composable
 fun FSCSlutckyBottomBar(navController: NavController) {
     val bottomBarScreens = listOf(
-        FSCSlutckyBottomBarItem.Dashboard,
-        FSCSlutckyBottomBarItem.Matches,
-        FSCSlutckyBottomBarItem.Shop,
-        FSCSlutckyBottomBarItem.Profile
+        FSCSlutskyBottomBarItem.Dashboard,
+        FSCSlutskyBottomBarItem.Matches,
+        FSCSlutskyBottomBarItem.Shop,
+        FSCSlutskyBottomBarItem.Profile
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -84,7 +84,7 @@ fun FSCSlutckyBottomBar(navController: NavController) {
 
 @Composable
 fun RowScope.AddItem(
-    screen: FSCSlutckyBottomBarItem,
+    screen: FSCSlutskyBottomBarItem,
     currentDestination: NavDestination?,
     navController: NavController
 ) {

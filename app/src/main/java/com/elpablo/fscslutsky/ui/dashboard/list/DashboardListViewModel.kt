@@ -1,4 +1,4 @@
-package com.elpablo.fscslutsky.ui.dashboard
+package com.elpablo.fscslutsky.ui.dashboard.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

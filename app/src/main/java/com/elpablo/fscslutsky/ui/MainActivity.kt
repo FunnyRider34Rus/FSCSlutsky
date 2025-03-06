@@ -4,20 +4,18 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.elpablo.fscslutsky.core.navigation.SetupNavGraph
 import com.elpablo.fscslutsky.core.theme.FSCSlutskyTheme
-import com.elpablo.fscslutsky.core.utils.SnackbarProvider
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    @Inject
-    lateinit var viewModel: MainActivityViewModel
+    private val viewModel: MainActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,9 +23,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FSCSlutskyTheme {
-                SnackbarProvider {
-                    FSCSlutskyApp(startDestination = viewModel.startDestination.value)
-                }
+                FSCSlutskyApp(startDestination = viewModel.startDestination)
             }
         }
     }

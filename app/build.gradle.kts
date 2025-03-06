@@ -17,7 +17,6 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
@@ -33,6 +32,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -83,6 +83,21 @@ dependencies {
     implementation(libs.google.icons)
     //AutolinkText
     implementation(libs.autolinktext)
+    //Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.json)
+    //okHTTP3
+    implementation(libs.retrofit.okhttp)
+    //VK
+    implementation(libs.vk.core)
+    implementation(libs.vk.api)
+    //Media3
+    implementation(libs.exoplayer)
+    implementation(libs.exoplayer.dash)
+    implementation(libs.exoplayer.ui)
+    //Glide
+    implementation(libs.glide)
+
     //Tests
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

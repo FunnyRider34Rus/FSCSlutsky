@@ -1,5 +1,5 @@
 [versions]
-agp = "8.8.2"
+agp = "8.9.0"
 kotlin = "2.1.10"
 ksp = "2.1.10-1.0.31"
 coreKtx = "1.15.0"
@@ -16,8 +16,14 @@ navigationHilt = "1.2.0"
 firebaseBom = "33.10.0"
 gmsServices = "4.4.2"
 firebaseCommonKtx = "21.0.0"
-coil = "2.7.0"
+coil = "3.1.0"
 autolinktext = "2.0.1"
+retrofit="2.11.0"
+okhttp3 = "4.12.0"
+vk = "4.1.0"
+exoplayer = "1.5.1"
+glide = "1.0.0-beta01"
+secrets = "2.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -45,9 +51,18 @@ androidx-navigation-hilt = { group = "androidx.hilt", name = "hilt-navigation-co
 google-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 google-firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore"}
 firebase-common-ktx = { group = "com.google.firebase", name = "firebase-common-ktx", version.ref = "firebaseCommonKtx" }
-coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+coil = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
 google-icons = { group = "androidx.compose.material", name = "material-icons-extended" }
 autolinktext = { module = "sh.calvin.autolinktext:autolinktext", version.ref = "autolinktext" }
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-json = { group = "com.squareup.retrofit2", name ="converter-gson", version.ref = "retrofit" }
+retrofit-okhttp = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp3" }
+vk-core = { group = "com.vk", name = "android-sdk-core", version.ref = "vk" }
+vk-api = { group = "com.vk", name = "android-sdk-api", version.ref = "vk" }
+exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "exoplayer" }
+exoplayer-dash = { group = "androidx.media3", name = "media3-exoplayer-dash", version.ref = "exoplayer" }
+exoplayer-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "exoplayer" }
+glide = { group = "com.github.bumptech.glide", name = "compose", version.ref = "glide" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

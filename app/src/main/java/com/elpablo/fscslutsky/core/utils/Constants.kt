@@ -21,3 +21,12 @@ const val FIRESTORE_NODE_NEWS_TIMESTAMP = "date"
 
 //Лимит на количество item в одном запросе
 const val FIRESTORE_LIMIT_QUERY = 5L
+
+data class VKAPI(
+    val scheme: String = "https",
+    val host: String = "api.vk.com",
+    val version: String = "5.199",
+    val domain: String = "fsc_slutsky_vlg",
+    val count: Int = 20,
+    val newsFeed: String = "/method/wall.get"
+)

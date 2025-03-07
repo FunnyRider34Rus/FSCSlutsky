@@ -10,10 +10,15 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.elpablo.fscslutsky.core.navigation.SetupNavGraph
 import com.elpablo.fscslutsky.core.theme.FSCSlutskyTheme
+import com.elpablo.fscslutsky.domain.repoitory.UserRepository
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var userRepository: UserRepository
 
     private val viewModel: MainActivityViewModel by viewModels()
 
@@ -34,6 +39,6 @@ fun FSCSlutskyApp(startDestination: String) {
     val navController = rememberNavController()
     SetupNavGraph(
         navController = navController,
-        startDestination = startDestination
+        startDestination = startDestination,
     )
 }

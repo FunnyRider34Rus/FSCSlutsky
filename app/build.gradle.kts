@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.google.gms)
+    alias(libs.plugins.secrets)
+    alias(libs.plugins.vk.placeholder)
 }
 
 android {
@@ -33,15 +35,22 @@ android {
         }
     }
 
+    secrets {
+        propertiesFileName = "secrets.properties"
+        defaultPropertiesFileName = "local.properties"
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+        isCoreLibraryDesugaringEnabled = true
     }
     kotlinOptions {
         jvmTarget = "11"
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.14"
@@ -91,12 +100,17 @@ dependencies {
     //VK
     implementation(libs.vk.core)
     implementation(libs.vk.api)
+    implementation(libs.vk.id)
+    implementation(libs.vk.id.onetap)
     //Media3
     implementation(libs.exoplayer)
     implementation(libs.exoplayer.dash)
     implementation(libs.exoplayer.ui)
     //Glide
     implementation(libs.glide)
+
+    //Desugaring
+    coreLibraryDesugaring(libs.desugaring)
 
     //Tests
     testImplementation(libs.junit)

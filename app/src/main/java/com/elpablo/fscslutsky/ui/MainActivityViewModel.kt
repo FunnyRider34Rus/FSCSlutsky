@@ -17,5 +17,5 @@ class MainActivityViewModel @Inject constructor(): ViewModel() {
     private val _isLoading: MutableState<Boolean> = mutableStateOf(false)
     val isLoading: State<Boolean> = _isLoading
 
-    val startDestination = Screen.WALL.route
+    val startDestination = Screen.DASHBOARDLIST.route
 }

@@ -1,8 +1,6 @@
 package com.elpablo.fscslutsky.core.components
 
 import androidx.annotation.StringRes
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -16,6 +14,7 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.elpablo.fscslutsky.R
@@ -61,7 +60,8 @@ fun HeaderTopAppBar(@StringRes id: Int) {
         title = {
             Text(
                 text = stringResource(id),
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.titleLarge
             )
         },
         colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background)
@@ -72,11 +72,11 @@ fun HeaderTopAppBar(@StringRes id: Int) {
 @Composable
 fun ButtonBackwardTopAppBar(onClick: () -> Unit) {
     TopAppBar(
-        title = { Text("") },
+        title = {  },
         navigationIcon = {
             IconButton(onClick = onClick) {
                 Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    painter = painterResource(R.drawable.arrow_back_outline),
                     contentDescription = "Button back",
                     tint = MaterialTheme.colorScheme.primary
                 )

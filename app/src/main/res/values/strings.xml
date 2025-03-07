@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">ФСШ Слуцкого</string>
     <integer name="com_vk_sdk_AppId">51738670</integer>
-    <string name="service_key">f71d1e10f71d1e10f71d1e108ef408663eff71df71d1e1093f33c86c02b5c2f663a3097</string>
-    <string name="bottom_bar_dashboard_label">Лента</string>
+    <string name="bottom_bar_dashboard_label">Главная</string>
     <string name="bottom_bar_matches_label">Матчи</string>
     <string name="bottom_bar_shop_label">Магазин</string>
     <string name="bottom_bar_profile_label">Аккаунт</string>

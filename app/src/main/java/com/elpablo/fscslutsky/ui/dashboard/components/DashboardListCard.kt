@@ -11,11 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.elpablo.fscslutsky.core.utils.timeAgo
 import com.elpablo.fscslutsky.data.model.News
 import com.elpablo.fscslutsky.ui.dashboard.list.DashboardListEvent
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun DashboardListCard(
     news: News,
@@ -28,11 +30,9 @@ fun DashboardListCard(
             onNavigateToDetail(news.id)
         }
     ) {
-        AsyncImage(
+        GlideImage(
             model = news.images?.first(),
             contentDescription = null,
-            modifier = Modifier
-                .fillMaxWidth(),
             contentScale = ContentScale.FillWidth
         )
         news.title?.let { title ->
@@ -41,8 +41,8 @@ fun DashboardListCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
-                color = MaterialTheme.colorScheme.primary,
-                style = MaterialTheme.typography.titleMedium
+                color = MaterialTheme.colorScheme.secondary,
+                style = MaterialTheme.typography.bodyLarge
             )
         }
         Text(
@@ -52,7 +52,7 @@ fun DashboardListCard(
                 .padding(end = 16.dp, bottom = 16.dp),
             textAlign = TextAlign.End,
             color = MaterialTheme.colorScheme.secondary,
-            style = MaterialTheme.typography.bodySmall
+            style = MaterialTheme.typography.labelLarge
         )
     }
 }

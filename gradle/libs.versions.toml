@@ -21,9 +21,12 @@ autolinktext = "2.0.1"
 retrofit="2.11.0"
 okhttp3 = "4.12.0"
 vk = "4.1.0"
+vk-placeholder = "1.1.0"
+vk-id = "2.3.1"
 exoplayer = "1.5.1"
 glide = "1.0.0-beta01"
-secrets = "2.0.1"
+gradleSecret = "2.0.1"
+desugaring = "2.1.5"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -59,10 +62,13 @@ retrofit-json = { group = "com.squareup.retrofit2", name ="converter-gson", vers
 retrofit-okhttp = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp3" }
 vk-core = { group = "com.vk", name = "android-sdk-core", version.ref = "vk" }
 vk-api = { group = "com.vk", name = "android-sdk-api", version.ref = "vk" }
+vk-id = { group = "com.vk.id", name = "vkid", version.ref = "vk-id" }
+vk-id-onetap = { group = "com.vk.id", name = "onetap-compose", version.ref = "vk-id" }
 exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "exoplayer" }
 exoplayer-dash = { group = "androidx.media3", name = "media3-exoplayer-dash", version.ref = "exoplayer" }
 exoplayer-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "exoplayer" }
 glide = { group = "com.github.bumptech.glide", name = "compose", version.ref = "glide" }
+desugaring = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugaring" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -71,4 +77,6 @@ kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 google-gms = { id = "com.google.gms.google-services", version.ref = "gmsServices" }
+secrets = {id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "gradleSecret" }
+vk-placeholder = { id = "vkid.manifest.placeholders", version.ref = "vk-placeholder" }
 

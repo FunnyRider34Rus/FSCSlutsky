@@ -22,6 +22,7 @@ import com.elpablo.fscslutsky.ui.dashboard.list.DashboardListScreen
 import com.elpablo.fscslutsky.ui.dashboard.list.DashboardListViewModel
 import com.elpablo.fscslutsky.ui.matches.MatchesScreen
 import com.elpablo.fscslutsky.ui.profile.ProfileScreen
+import com.elpablo.fscslutsky.ui.profile.ProfileViewModel
 import com.elpablo.fscslutsky.ui.shop.ShopScreen
 import com.elpablo.fscslutsky.ui.wall.WallScreen
 import com.elpablo.fscslutsky.ui.wall.WallViewModel
@@ -98,7 +99,9 @@ fun SetupNavGraph(navController: NavHostController, startDestination: String) {
                 ShopScreen(modifier = modifier)
             }
             composable(route = Screen.PROFILE.route) {
-                ProfileScreen(modifier = modifier)
+                val viewModel = hiltViewModel<ProfileViewModel>()
+                val state by viewModel.uiState.collectAsStateWithLifecycle()
+                ProfileScreen(modifier = modifier, uiState = state, onEvent = viewModel::onEvent)
             }
         }
     }

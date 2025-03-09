@@ -1,4 +1,4 @@
-package com.elpablo.fscslutsky.data.model
+package com.elpablo.fscslutsky.domain.model
 
 data class WallResponse(
     val response: WallPosts

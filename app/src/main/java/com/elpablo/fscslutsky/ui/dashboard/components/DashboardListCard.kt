@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.elpablo.fscslutsky.core.utils.timeAgo
-import com.elpablo.fscslutsky.data.model.News
+import com.elpablo.fscslutsky.domain.model.News
 import com.elpablo.fscslutsky.ui.dashboard.list.DashboardListEvent
 
 @OptIn(ExperimentalGlideComposeApi::class)

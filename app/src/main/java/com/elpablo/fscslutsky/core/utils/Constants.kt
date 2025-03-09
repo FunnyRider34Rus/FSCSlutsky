@@ -19,6 +19,9 @@ const val FIRESTORE_NODE_NEWS = "News"
 //Firestore Collection Fields
 const val FIRESTORE_NODE_NEWS_TIMESTAMP = "date"
 
+//DataStore Preferences
+const val DATASTORE_PREFERENCES_USER_PREFERENCES = "user_prefs"
+
 //Лимит на количество item в одном запросе
 const val FIRESTORE_LIMIT_QUERY = 5L
 

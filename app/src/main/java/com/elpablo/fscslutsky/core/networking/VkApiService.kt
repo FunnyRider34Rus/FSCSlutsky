@@ -1,6 +1,6 @@
 package com.elpablo.fscslutsky.core.networking
-import com.elpablo.fscslutsky.data.model.Video
-import com.elpablo.fscslutsky.data.model.WallResponse
+import com.elpablo.fscslutsky.domain.model.Video
+import com.elpablo.fscslutsky.domain.model.WallResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

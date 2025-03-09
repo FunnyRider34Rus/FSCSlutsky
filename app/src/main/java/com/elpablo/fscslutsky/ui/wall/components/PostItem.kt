@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.elpablo.fscslutsky.data.model.Post
+import com.elpablo.fscslutsky.domain.model.Post
 import com.elpablo.fscslutsky.ui.wall.WallEvent
 import com.elpablo.fscslutsky.ui.wall.WallState
 

@@ -6,7 +6,7 @@ import com.elpablo.fscslutsky.core.utils.FIRESTORE_NODE_NEWS_TIMESTAMP
 import com.elpablo.fscslutsky.core.utils.Response
 import com.elpablo.fscslutsky.core.utils.Response.Failure
 import com.elpablo.fscslutsky.core.utils.Response.Success
-import com.elpablo.fscslutsky.data.model.News
+import com.elpablo.fscslutsky.domain.model.News
 import com.elpablo.fscslutsky.domain.repoitory.NewsRepository
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore

@@ -1,7 +1,7 @@
-package com.elpablo.fscslutsky.data.model
+package com.elpablo.fscslutsky.domain.model
 
 data class User(
-    var id: Long? = null,
+    var id: String? = null,
     var accessToken: String? = null,
     var firstName: String? = null,
     var lastName: String? = null,

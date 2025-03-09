@@ -14,7 +14,7 @@ plugins {
 
 vkidManifestPlaceholders {
     val properties = Properties()
-    properties.load(file("secrets.properties").inputStream())
+    properties.load(file("app/secrets.properties").inputStream())
     val clientId = properties["VKIDClientID"] ?: error("")
     val clientSecret = properties["VKIDClientSecret"] ?: error("")
     init(
@@ -22,7 +22,7 @@ vkidManifestPlaceholders {
         clientSecret = clientSecret.toString(),
     )
     vkidRedirectHost = "vk.com"
-    vkidRedirectScheme = "vk51738670"
+    vkidRedirectScheme = "vk53221923"
     vkidClientId = clientId.toString()
     vkidClientSecret = clientSecret.toString()
 }

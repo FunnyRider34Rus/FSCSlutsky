@@ -28,6 +28,5 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideUserRepository(): UserRepository = UserRepositoryImpl()
-
+    fun provideUserRepository(@ApplicationContext context: Context): UserRepository = UserRepositoryImpl(context = context)
 }

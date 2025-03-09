@@ -1,6 +1,6 @@
 package com.elpablo.fscslutsky.ui.wall
 
-import com.elpablo.fscslutsky.data.model.Post
+import com.elpablo.fscslutsky.domain.model.Post
 
 data class WallState(
     val posts: List<Post> = emptyList(),

@@ -1,4 +1,4 @@
-package com.elpablo.fscslutsky.data.model
+package com.elpablo.fscslutsky.domain.model
 
 import com.google.firebase.Timestamp
 

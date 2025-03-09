@@ -1,6 +1,6 @@
 package com.elpablo.fscslutsky.ui.dashboard.list
 
-import com.elpablo.fscslutsky.data.model.News
+import com.elpablo.fscslutsky.domain.model.News
 
 data class DashboardListViewState(
     val content: List<News> = emptyList(),

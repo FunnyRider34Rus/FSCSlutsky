@@ -31,7 +31,7 @@ fun UserProfileScreen(
     ) {
         GlideImage(
             modifier = Modifier.size(100.dp).clip(CircleShape),
-            model = uiState.user?.photoURL,
+            model = uiState.user?.photo200,
             contentDescription = null,
             contentScale = ContentScale.Crop
         )

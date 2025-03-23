@@ -1,9 +1,12 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.elpablo.fscslutsky.core.navigation
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -16,6 +19,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.elpablo.fscslutsky.core.components.FSCSSlutskyTitle
 import com.elpablo.fscslutsky.core.components.FSCSlutckyBottomBar
+import com.elpablo.fscslutsky.ui.auth.AuthScreen
+import com.elpablo.fscslutsky.ui.auth.AuthViewModel
 import com.elpablo.fscslutsky.ui.dashboard.detail.DashboardDetailScreen
 import com.elpablo.fscslutsky.ui.dashboard.detail.DashboardDetailViewModel
 import com.elpablo.fscslutsky.ui.dashboard.list.DashboardListScreen
@@ -30,7 +35,8 @@ import com.elpablo.fscslutsky.ui.wall.WallViewModel
 @Composable
 fun SetupNavGraph(navController: NavHostController, startDestination: String) {
     Scaffold(
-        modifier = Modifier.background(MaterialTheme.colorScheme.background),
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background),
         topBar = { FSCSSlutskyTitle(navController = navController) },
         bottomBar = { FSCSlutckyBottomBar(navController = navController) }
     ) { paddingValues ->
@@ -63,10 +69,24 @@ fun SetupNavGraph(navController: NavHostController, startDestination: String) {
                 )
             }
         ) {
+            composable(route = Screen.AUTH.route) {
+                val viewModel = hiltViewModel<AuthViewModel>()
+                val state by viewModel.uiState.collectAsStateWithLifecycle()
+                AuthScreen(
+                    modifier = modifier,
+                    uiState = state,
+                    onEvent = viewModel::onEvent,
+                    onNavigate = { navController.navigate(Screen.WALL.route) }
+                    )
+            }
             composable(route = Screen.WALL.route) {
                 val viewModel = hiltViewModel<WallViewModel>()
                 val state by viewModel.state.collectAsStateWithLifecycle()
-                WallScreen(modifier = modifier, state = state, onEvent = viewModel::onEvent)
+                WallScreen(
+                    modifier = modifier,
+                    state = state,
+                    onEvent = viewModel::onEvent
+                )
             }
             composable(route = Screen.DASHBOARDLIST.route) {
                 val viewModel = hiltViewModel<DashboardListViewModel>()
@@ -90,7 +110,6 @@ fun SetupNavGraph(navController: NavHostController, startDestination: String) {
                     state = state,
                     id =id
                 )
-
             }
             composable(route = Screen.MATCHES.route) {
                 MatchesScreen(modifier = modifier)
@@ -101,7 +120,10 @@ fun SetupNavGraph(navController: NavHostController, startDestination: String) {
             composable(route = Screen.PROFILE.route) {
                 val viewModel = hiltViewModel<ProfileViewModel>()
                 val state by viewModel.uiState.collectAsStateWithLifecycle()
-                ProfileScreen(modifier = modifier, uiState = state, onEvent = viewModel::onEvent)
+                ProfileScreen(
+                    modifier = modifier,
+                    uiState = state
+                )
             }
         }
     }

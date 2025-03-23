@@ -39,11 +39,17 @@ data class Video(
     val id: Int,
     val ownerId: Int,
     val accessKey: String,
-    val player: String?
+    val image: List<VideoPhoto>
 )
 
 data class VideoResponse(
     val response: VideoItems
+)
+
+data class VideoPhoto(
+    val url: String,
+    val width: Int,
+    val height: Int
 )
 
 data class VideoItems(

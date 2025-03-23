@@ -3,7 +3,7 @@ package com.elpablo.fscslutsky.ui.dashboard.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.elpablo.fscslutsky.core.utils.Response
-import com.elpablo.fscslutsky.domain.repoitory.NewsRepository
+import com.elpablo.fscslutsky.domain.repository.NewsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

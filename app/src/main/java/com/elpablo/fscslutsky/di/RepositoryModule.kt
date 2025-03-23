@@ -3,10 +3,9 @@ package com.elpablo.fscslutsky.di
 import android.content.Context
 import com.elpablo.fscslutsky.data.repository.ConnectivityObserverImpl
 import com.elpablo.fscslutsky.data.repository.NewsRepositoryImpl
-import com.elpablo.fscslutsky.data.repository.UserRepositoryImpl
-import com.elpablo.fscslutsky.domain.repoitory.ConnectivityObserver
-import com.elpablo.fscslutsky.domain.repoitory.NewsRepository
-import com.elpablo.fscslutsky.domain.repoitory.UserRepository
+import com.elpablo.fscslutsky.domain.model.User
+import com.elpablo.fscslutsky.domain.repository.ConnectivityObserver
+import com.elpablo.fscslutsky.domain.repository.NewsRepository
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
@@ -28,5 +27,5 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideUserRepository(@ApplicationContext context: Context): UserRepository = UserRepositoryImpl(context = context)
+    fun provideCurrentUser(): User? = User()
 }

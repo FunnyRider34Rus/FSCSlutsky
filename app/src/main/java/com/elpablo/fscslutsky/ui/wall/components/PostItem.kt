@@ -13,15 +13,11 @@ import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.elpablo.fscslutsky.domain.model.Post
-import com.elpablo.fscslutsky.ui.wall.WallEvent
-import com.elpablo.fscslutsky.ui.wall.WallState
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun PostItem(
-    state: WallState,
     post: Post,
-    onEvent: (WallEvent) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -30,6 +26,18 @@ fun PostItem(
         post.attachments?.forEach { attachment ->
             if (attachment.type == "photo") {
                 val photoUrl = attachment.photo?.sizes[2]?.url
+                if (photoUrl != null) {
+                    GlideImage(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        model = photoUrl,
+                        contentDescription = null,
+                        contentScale = ContentScale.FillWidth
+                    )
+                }
+            }
+            if (attachment.type == "video") {
+                val photoUrl = attachment.video?.image[4]?.url
                 if (photoUrl != null) {
                     GlideImage(
                         modifier = Modifier
@@ -56,5 +64,5 @@ fun PostItem(
 @Composable
 @Preview
 fun PostItemPreview() {
-    PostItem(state = WallState(), post = Post(text = "Hello"), onEvent = { })
+    PostItem(post = Post(text = "Hello"))
 }

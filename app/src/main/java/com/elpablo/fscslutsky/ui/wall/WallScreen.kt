@@ -28,7 +28,7 @@ fun WallScreen(modifier: Modifier, state: WallState, onEvent: (WallEvent) -> Uni
             state = scrollState
         ) {
             items(state.posts.size) { index ->
-                PostItem(state = state, post = state.posts[index], onEvent = onEvent)
+                PostItem(post = state.posts[index])
             }
         }
     }

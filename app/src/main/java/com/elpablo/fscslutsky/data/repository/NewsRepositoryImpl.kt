@@ -7,7 +7,7 @@ import com.elpablo.fscslutsky.core.utils.Response
 import com.elpablo.fscslutsky.core.utils.Response.Failure
 import com.elpablo.fscslutsky.core.utils.Response.Success
 import com.elpablo.fscslutsky.domain.model.News
-import com.elpablo.fscslutsky.domain.repoitory.NewsRepository
+import com.elpablo.fscslutsky.domain.repository.NewsRepository
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -66,6 +66,6 @@ class NewsRepositoryImpl @Inject constructor(private val firestore: FirebaseFire
             }
             trySend(response)
         }
-        awaitClose { }
+        awaitClose {  }
     }
 }

@@ -25,6 +25,9 @@ fun FSCSSlutskyTitle(navController: NavController) {
     var id by remember { mutableIntStateOf(0) }
     navController.addOnDestinationChangedListener { _, destination, _ ->
         when (destination.route) {
+            Screen.AUTH.route -> {
+                id = R.string.screen_title_auth
+            }
             Screen.DASHBOARDLIST.route -> {
                 id = R.string.bottom_bar_dashboard_label
             }
@@ -40,7 +43,6 @@ fun FSCSSlutskyTitle(navController: NavController) {
             Screen.PROFILE.route -> {
                 id = R.string.bottom_bar_profile_label
             }
-
             else -> id = 0
         }
     }

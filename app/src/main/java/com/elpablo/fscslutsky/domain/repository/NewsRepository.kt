@@ -1,4 +1,4 @@
-package com.elpablo.fscslutsky.domain.repoitory
+package com.elpablo.fscslutsky.domain.repository
 
 import com.elpablo.fscslutsky.core.utils.Response
 import com.elpablo.fscslutsky.domain.model.News

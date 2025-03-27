@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.elpablo.fscslutsky.core.components.FSCSlutskyAlertDialog
 import com.elpablo.fscslutsky.core.components.FSCSlutskyLoader
+import com.vk.id.auth.VKIDAuthUiParams
 import com.vk.id.onetap.common.OneTapStyle
 import com.vk.id.onetap.common.button.style.OneTapButtonCornersStyle
 import com.vk.id.onetap.common.button.style.OneTapButtonSizeStyle
@@ -54,7 +55,10 @@ fun AuthScreen(
             style = OneTapStyle.Light(
                 cornersStyle = OneTapButtonCornersStyle.Custom(16f),
                 sizeStyle = OneTapButtonSizeStyle.DEFAULT
-            )
+            ),
+            authParams = VKIDAuthUiParams {
+                scopes = setOf("wall", "video", "photos", "phone")
+            }
         )
     }
 }

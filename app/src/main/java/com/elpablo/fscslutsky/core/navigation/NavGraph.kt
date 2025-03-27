@@ -29,8 +29,6 @@ import com.elpablo.fscslutsky.ui.matches.MatchesScreen
 import com.elpablo.fscslutsky.ui.profile.ProfileScreen
 import com.elpablo.fscslutsky.ui.profile.ProfileViewModel
 import com.elpablo.fscslutsky.ui.shop.ShopScreen
-import com.elpablo.fscslutsky.ui.wall.WallScreen
-import com.elpablo.fscslutsky.ui.wall.WallViewModel
 
 @Composable
 fun SetupNavGraph(navController: NavHostController, startDestination: String) {
@@ -76,17 +74,8 @@ fun SetupNavGraph(navController: NavHostController, startDestination: String) {
                     modifier = modifier,
                     uiState = state,
                     onEvent = viewModel::onEvent,
-                    onNavigate = { navController.navigate(Screen.WALL.route) }
+                    onNavigate = { navController.navigate(Screen.DASHBOARDLIST.route) }
                     )
-            }
-            composable(route = Screen.WALL.route) {
-                val viewModel = hiltViewModel<WallViewModel>()
-                val state by viewModel.state.collectAsStateWithLifecycle()
-                WallScreen(
-                    modifier = modifier,
-                    state = state,
-                    onEvent = viewModel::onEvent
-                )
             }
             composable(route = Screen.DASHBOARDLIST.route) {
                 val viewModel = hiltViewModel<DashboardListViewModel>()

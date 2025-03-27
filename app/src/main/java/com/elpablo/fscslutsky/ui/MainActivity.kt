@@ -1,7 +1,7 @@
 package com.elpablo.fscslutsky.ui
 
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -12,7 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import com.elpablo.fscslutsky.core.navigation.Screen
 import com.elpablo.fscslutsky.core.navigation.SetupNavGraph
 import com.elpablo.fscslutsky.core.theme.FSCSlutskyTheme
-import com.vk.api.sdk.VK
+import com.vk.id.VKID
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,12 +26,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FSCSlutskyTheme {
-                if (!VK.isLoggedIn()) {
-                    val intent = Intent(this, LoginActivity::class.java)
-                    startActivity(intent)
-                } else {
-                    FSCSlutskyApp(startDestination = Screen.WALL.route)
-                }
+                val startDestination = if (viewModel.isLoggedIn) Screen.DASHBOARDLIST.route else Screen.AUTH.route
+                Log.d("VKID", "accessToken: ${VKID.instance.accessToken?.token}")
+                FSCSlutskyApp(startDestination = startDestination)
             }
         }
     }

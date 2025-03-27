@@ -111,6 +111,7 @@ dependencies {
     implementation(libs.vk.core)
     implementation(libs.vk.api)
     implementation(libs.vk.id)
+    implementation(libs.vk.id.support)
     implementation(libs.vk.id.onetap)
     //Media3
     implementation(libs.exoplayer)

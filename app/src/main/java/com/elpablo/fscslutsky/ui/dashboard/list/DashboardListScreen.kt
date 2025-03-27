@@ -24,9 +24,9 @@ fun DashboardListScreen(
         modifier = modifier,
         state = scrollState
     ) {
-        items(state.content.size) { index ->
+        items(state.posts.size) { index ->
             DashboardListCard(
-                news = state.content[index],
+                post = state.posts[index],
                 onEvent = onEvent,
                 onNavigateToDetail = onNavigateToDetail
             )

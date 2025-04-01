@@ -18,12 +18,10 @@ class AuthViewModel @Inject constructor() : ViewModel() {
     fun onEvent(event: AuthEvent) = viewModelScope.launch(Dispatchers.IO) {
         when (event) {
             is AuthEvent.AuthSuccess -> {
-                Log.d("VKID", "AuthSuccess: ${VKID.instance.accessToken}")
                 _uiState.update { it.copy(isLoading = false, isLoggedIn = true) }
             }
 
             is AuthEvent.AuthFail -> {
-                Log.d("VKID", "AuthFailed")
                 _uiState.update { it.copy(isLoading = false, isError = true, error = event.error) }
             }
         }

@@ -97,7 +97,7 @@ fun SetupNavGraph(navController: NavHostController, startDestination: String) {
                     modifier = modifier,
                     viewModel = viewModel,
                     state = state,
-                    id =id
+                    id = id
                 )
             }
             composable(route = Screen.MATCHES.route) {

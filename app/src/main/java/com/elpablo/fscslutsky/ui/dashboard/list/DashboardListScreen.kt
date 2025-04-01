@@ -31,6 +31,7 @@ fun DashboardListScreen(
                 onNavigateToDetail = onNavigateToDetail
             )
         }
+
     }
     if (scrollState.isScrolledToEnd()) {
         LaunchedEffect(scrollState.isScrolledToEnd()) {

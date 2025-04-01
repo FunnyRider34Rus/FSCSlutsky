@@ -27,7 +27,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             FSCSlutskyTheme {
                 val startDestination = if (viewModel.isLoggedIn) Screen.DASHBOARDLIST.route else Screen.AUTH.route
-                Log.d("VKID", "accessToken: ${VKID.instance.accessToken?.token}")
                 FSCSlutskyApp(startDestination = startDestination)
             }
         }

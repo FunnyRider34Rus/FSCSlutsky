@@ -1,9 +1,11 @@
 package com.elpablo.fscslutsky.ui.dashboard.detail
 
-import com.elpablo.fscslutsky.domain.model.News
+import com.vk.sdk.api.wall.dto.WallWallItemDto
+import com.vk.sdk.api.wall.dto.WallWallpostAttachmentDto
 
 data class DashboardDetailViewState(
-    val content: News? = null,
+    val content: WallWallItemDto? = null,
+    val attachments: MutableList<WallWallpostAttachmentDto?> = mutableListOf(),
     val isLoading: Boolean = false,
     val isError: Boolean = false,
     val error: String = ""

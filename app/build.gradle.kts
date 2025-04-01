@@ -53,6 +53,7 @@ android {
         buildConfig = true
         viewBinding = true
     }
+    @Suppress("UnstableApiUsage")
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.14"
     }

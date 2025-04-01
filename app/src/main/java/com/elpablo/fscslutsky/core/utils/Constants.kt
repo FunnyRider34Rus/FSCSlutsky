@@ -25,6 +25,14 @@ const val DATASTORE_PREFERENCES_USER_PREFERENCES = "user_prefs"
 //Лимит на количество item в одном запросе
 const val FIRESTORE_LIMIT_QUERY = 5L
 
+//Лимит на количество item в списке
+const val VK_WALL_COUNT = 20
+const val VK_ID_COMMUNITY = -191885529L
+
+enum class AttachmentType {
+    VIDEO, PHOTO
+}
+
 data class VKAPI(
     val scheme: String = "https",
     val host: String = "api.vk.com",

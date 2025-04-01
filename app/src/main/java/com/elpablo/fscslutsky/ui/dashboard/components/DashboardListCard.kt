@@ -32,17 +32,17 @@ fun DashboardListCard(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                //onNavigateToDetail(news.id)
+                when(post) {
+                    is WallWallItemDto.WallWallpostFullDto -> {
+                        onNavigateToDetail(post.id.toString())
+                    }
+                    else -> {}
+                }
+
             }
     ) {
-//        GlideImage(
-//            model = news.images?.first(),
-//            contentDescription = null,
-//            contentScale = ContentScale.FillWidth
-//        )
         when (post) {
             is WallWallItemDto.WallWallpostFullDto -> {
-
                 post.attachments?.forEach { attachment ->
                     when (attachment.type) {
                         WallWallpostAttachmentTypeDto.PHOTO -> {
@@ -65,8 +65,10 @@ fun DashboardListCard(
 
                 post.text?.let { text ->
                     Text(
-                        text = AnnotatedString.rememberAutoLinkText(text
-                            .substringBefore("[")),
+                        text = AnnotatedString
+                            .rememberAutoLinkText(text
+                            .substringBefore("[")
+                        ),
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(16.dp),

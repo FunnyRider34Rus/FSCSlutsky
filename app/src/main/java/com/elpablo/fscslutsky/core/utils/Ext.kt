@@ -2,6 +2,9 @@ package com.elpablo.fscslutsky.core.utils
 
 import androidx.compose.foundation.lazy.LazyListState
 import com.google.firebase.Timestamp
+import com.vk.sdk.api.video.dto.VideoVideoFullDto
+import com.vk.sdk.api.wall.dto.WallWallpostAttachmentDto
+import com.vk.sdk.api.wall.dto.WallWallpostAttachmentTypeDto
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -52,3 +55,7 @@ private const val HOUR_IN_MS = 60 * MINUTE_IN_MS
 private const val DAY_IN_MS = 24 * HOUR_IN_MS
 private const val MONTH_IN_MS = 30 * DAY_IN_MS
 private const val YEAR_IN_MS = 365 * DAY_IN_MS
+
+fun VideoVideoFullDto.toWallWallpostAttachmentDto(): WallWallpostAttachmentDto? {
+    return WallWallpostAttachmentDto(video = this, type = WallWallpostAttachmentTypeDto.VIDEO)
+}

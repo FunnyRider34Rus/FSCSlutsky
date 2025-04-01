@@ -1,5 +1,6 @@
 package com.elpablo.fscslutsky.ui.auth
 
+import android.util.Log
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.elpablo.fscslutsky.core.components.FSCSlutskyAlertDialog
 import com.elpablo.fscslutsky.core.components.FSCSlutskyLoader
+import com.vk.id.VKID
 import com.vk.id.auth.VKIDAuthUiParams
 import com.vk.id.onetap.common.OneTapStyle
 import com.vk.id.onetap.common.button.style.OneTapButtonCornersStyle
@@ -47,9 +49,12 @@ fun AuthScreen(
             modifier = Modifier.padding(bottom = 32.dp).padding(horizontal = 32.dp),
             onAuth = { oAuth, token ->
                 onEvent(AuthEvent.AuthSuccess)
+                Log.d("VKID", "AuthSuccess_token: ${VKID.instance.accessToken?.token}")
+                Log.d("VKID", "AuthSuccess_scope: ${VKID.instance.accessToken?.scopes}")
             },
             onFail = { oAuth, error ->
                 onEvent(AuthEvent.AuthFail(error.description))
+                Log.d("VKID", "AuthFailed")
             },
             signInAnotherAccountButtonEnabled = true,
             style = OneTapStyle.Light(
@@ -57,7 +62,7 @@ fun AuthScreen(
                 sizeStyle = OneTapButtonSizeStyle.DEFAULT
             ),
             authParams = VKIDAuthUiParams {
-                scopes = setOf("wall", "video", "photos", "phone")
+                scopes = setOf("video", "wall", "photos", "phone")
             }
         )
     }

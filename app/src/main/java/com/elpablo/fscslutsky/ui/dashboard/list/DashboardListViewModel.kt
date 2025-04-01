@@ -3,11 +3,8 @@ package com.elpablo.fscslutsky.ui.dashboard.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.elpablo.fscslutsky.core.utils.Response
-import com.elpablo.fscslutsky.domain.repository.NewsRepository
-import com.vk.api.sdk.VK
-import com.vk.dto.common.id.UserId
-import com.vk.id.vksdksupport.withVKIDToken
-import com.vk.sdk.api.wall.WallService
+import com.elpablo.fscslutsky.core.utils.VK_WALL_COUNT
+import com.elpablo.fscslutsky.domain.repository.VkWallRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,45 +14,44 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DashboardListViewModel @Inject constructor(private val repository: NewsRepository) :
+class DashboardListViewModel @Inject constructor(private val repository: VkWallRepository) :
     ViewModel() {
     private val _viewState = MutableStateFlow(DashboardListViewState())
     val viewState: StateFlow<DashboardListViewState> = _viewState
 
+    private var offset = VK_WALL_COUNT
+
     init {
-        _viewState.value = _viewState.value.copy(isLoading = true)
         getPosts()
     }
 
     private fun getPosts() {
         viewModelScope.launch(Dispatchers.IO) {
-            val request = VK.executeSync(
-                WallService().wallGet(ownerId = UserId(-191885529), count = 20).withVKIDToken()
-            )
-            _viewState.update { state ->
-                state.copy(posts = request.items, isLoading = false)
-            }
-        }
-    }
+            repository.getVKWallPosts(offset).collect { result ->
+                when (result) {
+                    is Response.Loading -> {
+                        _viewState.update { state ->
+                            state.copy(isLoading = true)
+                        }
+                    }
 
-    private fun getNews() = viewModelScope.launch(Dispatchers.IO) {
-        repository.getFirstPartNews().collect { result ->
-            when (result) {
-                is Response.Loading -> {
-                    _viewState.value = _viewState.value.copy(isLoading = true)
-                }
+                    is Response.Success -> {
+                        result.data?.let { data ->
+                            _viewState.update { state ->
+                                state.copy(posts = data, isLoading = false)
+                            }
+                            offset += VK_WALL_COUNT
+                        }
+                    }
 
-                is Response.Failure -> {
-                    _viewState.value = _viewState.value.copy(
-                        isLoading = false,
-                        isError = true,
-                        error = result.e?.localizedMessage ?: "Unexpected Error"
-                    )
-                }
-
-                is Response.Success -> {
-                    result.data?.let { data ->
-                        _viewState.value = _viewState.value.copy(isLoading = false, content = data)
+                    is Response.Failure -> {
+                        _viewState.update { state ->
+                            state.copy(
+                                isError = true,
+                                error = result.e?.localizedMessage ?: "Unexpected Error",
+                                isLoading = false
+                            )
+                        }
                     }
                 }
             }
@@ -64,43 +60,8 @@ class DashboardListViewModel @Inject constructor(private val repository: NewsRep
 
     fun onEvent(event: DashboardListEvent) = viewModelScope.launch(Dispatchers.IO) {
         when (event) {
-            is DashboardListEvent.OnCardClick -> {
-                _viewState.value = _viewState.value.copy(news = event.news, showBottomSheet = true)
-            }
-
             is DashboardListEvent.NextRequest -> {
-                getNextNews()
-            }
-
-            is DashboardListEvent.BottomSheetDismiss -> {
-                _viewState.value = _viewState.value.copy(showBottomSheet = false)
-            }
-        }
-    }
-
-    private fun getNextNews() = viewModelScope.launch(Dispatchers.IO) {
-        repository.getNextPartNews().collect { result ->
-            when (result) {
-                is Response.Loading -> {
-                    _viewState.value = _viewState.value.copy(isLoading = true)
-                }
-
-                is Response.Failure -> {
-                    _viewState.value = _viewState.value.copy(
-                        isLoading = false,
-                        isError = true,
-                        error = result.e?.localizedMessage ?: "Unexpected Error"
-                    )
-                }
-
-                is Response.Success -> {
-                    result.data?.let { data ->
-                        _viewState.value = _viewState.value.copy(
-                            isLoading = false,
-                            content = _viewState.value.content + data
-                        )
-                    }
-                }
+                getPosts()
             }
         }
     }

@@ -18,7 +18,7 @@ fun DashboardDetailScreen(
     id: String?
 ) {
     LaunchedEffect(null) {
-        viewModel.fetchNews(id)
+        viewModel.getPostByID(id?.toInt())
     }
     if (state.isLoading) {
         FSCSlutskyLoader()

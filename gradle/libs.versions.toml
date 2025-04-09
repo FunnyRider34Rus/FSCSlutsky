@@ -16,19 +16,14 @@ navigationHilt = "1.2.0"
 firebaseBom = "33.11.0"
 gmsServices = "4.4.2"
 firebaseCommonKtx = "21.0.0"
-coil = "3.1.0"
 autolinktext = "2.0.1"
-retrofit="2.11.0"
-okhttp3 = "4.12.0"
 vk = "4.1.0"
 vk-placeholder = "1.1.0"
 vk-id = "2.3.1"
 exoplayer = "1.6.0"
 glide = "1.0.0-beta01"
-glideBlur = "4.3.0"
 gradleSecret = "2.0.1"
 desugaring = "2.1.5"
-dataStore = "1.1.4"
 appcompat = "1.7.0"
 material = "1.12.0"
 annotation = "1.9.1"
@@ -54,6 +49,13 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
+androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 hilt-android-test = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
@@ -63,12 +65,8 @@ androidx-navigation-hilt = { group = "androidx.hilt", name = "hilt-navigation-co
 google-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 google-firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore"}
 firebase-common-ktx = { group = "com.google.firebase", name = "firebase-common-ktx", version.ref = "firebaseCommonKtx" }
-coil = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
 google-icons = { group = "androidx.compose.material", name = "material-icons-extended" }
 autolinktext = { module = "sh.calvin.autolinktext:autolinktext", version.ref = "autolinktext" }
-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
-retrofit-json = { group = "com.squareup.retrofit2", name ="converter-gson", version.ref = "retrofit" }
-retrofit-okhttp = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp3" }
 vk-core = { group = "com.vk", name = "android-sdk-core", version.ref = "vk" }
 vk-api = { group = "com.vk", name = "android-sdk-api", version.ref = "vk" }
 vk-id = { group = "com.vk.id", name = "vkid", version.ref = "vk-id" }
@@ -79,14 +77,6 @@ exoplayer-dash = { group = "androidx.media3", name = "media3-exoplayer-dash", ve
 exoplayer-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "exoplayer" }
 glide = { group = "com.github.bumptech.glide", name = "compose", version.ref = "glide" }
 desugaring = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugaring" }
-androidx-datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "dataStore" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
-androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
-androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
-androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
-androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

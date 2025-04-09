@@ -3,10 +3,7 @@ package com.elpablo.fscslutsky.ui.dashboard.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.elpablo.fscslutsky.core.utils.Response
-import com.elpablo.fscslutsky.core.utils.toWallWallpostAttachmentDto
-import com.elpablo.fscslutsky.domain.repository.VkWallRepository
-import com.vk.sdk.api.wall.dto.WallWallItemDto
-import com.vk.sdk.api.wall.dto.WallWallpostAttachmentTypeDto
+import com.elpablo.fscslutsky.domain.repository.VkSDKRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DashboardDetailViewModel @Inject constructor(private val repository: VkWallRepository) :
+class DashboardDetailViewModel @Inject constructor(private val repository: VkSDKRepository) :
     ViewModel() {
     private val _viewState = MutableStateFlow(DashboardDetailViewState())
     val viewState: StateFlow<DashboardDetailViewState> = _viewState

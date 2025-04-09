@@ -2,13 +2,10 @@ package com.elpablo.fscslutsky.di
 
 import android.content.Context
 import com.elpablo.fscslutsky.data.repository.ConnectivityObserverImpl
-import com.elpablo.fscslutsky.data.repository.NewsRepositoryImpl
-import com.elpablo.fscslutsky.data.repository.VkWallRepositoryImpl
+import com.elpablo.fscslutsky.data.repository.VkSDKRepositoryImpl
 import com.elpablo.fscslutsky.domain.model.User
 import com.elpablo.fscslutsky.domain.repository.ConnectivityObserver
-import com.elpablo.fscslutsky.domain.repository.NewsRepository
-import com.elpablo.fscslutsky.domain.repository.VkWallRepository
-import com.google.firebase.firestore.FirebaseFirestore
+import com.elpablo.fscslutsky.domain.repository.VkSDKRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,11 +18,7 @@ import javax.inject.Singleton
 object RepositoryModule {
     @Provides
     @Singleton
-    fun provideNewsRepository(firestore: FirebaseFirestore): NewsRepository = NewsRepositoryImpl(firestore = firestore)
-
-    @Provides
-    @Singleton
-    fun provideVKWallRepository(): VkWallRepository = VkWallRepositoryImpl()
+    fun provideVkSDKRepository(): VkSDKRepository = VkSDKRepositoryImpl()
 
     @Provides
     @Singleton

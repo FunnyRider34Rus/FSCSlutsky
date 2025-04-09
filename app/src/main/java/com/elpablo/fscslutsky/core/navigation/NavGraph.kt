@@ -5,6 +5,7 @@ package com.elpablo.fscslutsky.core.navigation
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -34,6 +35,7 @@ import com.elpablo.fscslutsky.ui.shop.ShopScreen
 fun SetupNavGraph(navController: NavHostController, startDestination: String) {
     Scaffold(
         modifier = Modifier
+            .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
         topBar = { FSCSSlutskyTitle(navController = navController) },
         bottomBar = { FSCSlutckyBottomBar(navController = navController) }
@@ -82,7 +84,7 @@ fun SetupNavGraph(navController: NavHostController, startDestination: String) {
                 val state by viewModel.viewState.collectAsStateWithLifecycle()
                 DashboardListScreen(
                     modifier = modifier,
-                    state = state,
+                    uiState = state,
                     onEvent = viewModel::onEvent,
                     onNavigateToDetail = { id ->
                         navController.navigate(Screen.DASHBOARDDETAIL.route+"/$id")

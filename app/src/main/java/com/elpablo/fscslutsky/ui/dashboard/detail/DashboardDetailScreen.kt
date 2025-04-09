@@ -1,9 +1,5 @@
 package com.elpablo.fscslutsky.ui.dashboard.detail
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -23,11 +19,5 @@ fun DashboardDetailScreen(
     if (state.isLoading) {
         FSCSlutskyLoader()
     }
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-    ) {
-        DashboardDetailCard(state = state)
-    }
+    DashboardDetailCard(modifier = modifier, state = state)
 }

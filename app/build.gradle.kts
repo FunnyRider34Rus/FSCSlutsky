@@ -91,23 +91,14 @@ dependencies {
     //Navigation
     implementation(libs.androidx.navigation)
     implementation(libs.androidx.navigation.hilt)
-    //DataStore
-    implementation(libs.androidx.datastore)
     //Firebase
     implementation(platform(libs.google.firebase.bom))
     implementation(libs.firebase.common.ktx)
     implementation(libs.google.firebase.firestore)
-    //Coil
-    implementation(libs.coil)
     //Google Icons
     implementation(libs.google.icons)
     //AutolinkText
     implementation(libs.autolinktext)
-    //Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.json)
-    //okHTTP3
-    implementation(libs.retrofit.okhttp)
     //VK
     implementation(libs.vk.core)
     implementation(libs.vk.api)

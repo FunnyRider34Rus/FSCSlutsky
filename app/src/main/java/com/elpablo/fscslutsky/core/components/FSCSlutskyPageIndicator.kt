@@ -19,14 +19,14 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun FSCSlutskyPageIndicator(pageCount: Int?, currentPageIndex: Int, modifier: Modifier = Modifier) {
     Box(modifier = modifier
-        .padding(bottom = 8.dp)
+        .padding(bottom = 16.dp)
         .fillMaxWidth()
     ) {
         Row(
             modifier = Modifier
                 .align(Alignment.Center)
                 .clip(RoundedCornerShape(8.dp))
-                .background(MaterialTheme.colorScheme.tertiary),
+                .background(MaterialTheme.colorScheme.tertiary.copy(alpha = 0.5f)),
             horizontalArrangement = Arrangement.Center
         ) {
             pageCount?.let { size ->

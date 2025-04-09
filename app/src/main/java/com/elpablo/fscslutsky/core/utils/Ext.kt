@@ -14,6 +14,11 @@ fun timestampToDate(timestamp: Timestamp?): String? {
     return simpleDateFormat.format(long)
 }
 
+fun longToDate(timestamp: Long?): String? {
+    val simpleDateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+    return simpleDateFormat.format(timestamp)
+}
+
 fun LazyListState.isScrolledToEnd() = layoutInfo.visibleItemsInfo.lastOrNull()?.index == layoutInfo.totalItemsCount-1
 
 fun timeAgo(timestamp: Timestamp?): String {

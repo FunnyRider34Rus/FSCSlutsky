@@ -4,7 +4,7 @@ import com.vk.sdk.api.wall.dto.WallWallItemDto
 import com.vk.sdk.api.wall.dto.WallWallpostAttachmentDto
 
 data class DashboardDetailViewState(
-    val content: WallWallItemDto? = null,
+    val content: WallWallItemDto.WallWallpostFullDto? = null,
     val attachments: MutableList<WallWallpostAttachmentDto?> = mutableListOf(),
     val isLoading: Boolean = false,
     val isError: Boolean = false,

@@ -3,6 +3,7 @@ package com.elpablo.fscslutsky.ui.dashboard.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.elpablo.fscslutsky.core.utils.Response
+import com.elpablo.fscslutsky.domain.model.toVkWall
 import com.elpablo.fscslutsky.domain.repository.VkSDKRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -24,13 +25,13 @@ class DashboardDetailViewModel @Inject constructor(private val repository: VkSDK
                 when (result) {
                     is Response.Loading -> {
                         _viewState.update { state ->
-                            state.copy(isLoading = true)
+                            state.copy(isPostLoading = true)
                         }
                     }
 
                     is Response.Success -> {
                         _viewState.update { state ->
-                            state.copy(content = result.data, isLoading = false)
+                            state.copy(content = result.data?.toVkWall(), isPostLoading = false)
                         }
                     }
 
@@ -39,11 +40,58 @@ class DashboardDetailViewModel @Inject constructor(private val repository: VkSDK
                             state.copy(
                                 isError = true,
                                 error = result.e?.localizedMessage ?: "Unexpected Error",
-                                isLoading = false
+                                isPostLoading = false
                             )
                         }
                     }
                 }
+            }
+        }
+    }
+
+    private fun getVideo(id: Int?, indexOfAttachment: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            var temp = _viewState.value.content
+            repository.getVKWallVideoById(id).collect { result ->
+                when (result) {
+                    is Response.Loading -> {
+                        _viewState.update { state ->
+                            state.copy(isVideoLoading = true)
+                        }
+                    }
+
+                    is Response.Success -> {
+                        temp?.attachments?.get(indexOfAttachment)?.video = result.data
+                        _viewState.update { state ->
+                            state.copy(
+                                content = temp,
+                                isVideoLoading = false
+                            )
+                        }
+                    }
+
+                    is Response.Failure -> {
+                        _viewState.update { state ->
+                            state.copy(
+                                isError = true,
+                                error = result.e?.localizedMessage ?: "Unexpected Error",
+                                isVideoLoading = false
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    fun onEvent(event: DashboardDetailEvent) {
+        when (event) {
+            is DashboardDetailEvent.GetVideoByID -> {
+                getVideo(event.id, event.indexOfAttachment)
+            }
+
+            is DashboardDetailEvent.GetPostByID -> {
+                getPostByID(event.id)
             }
         }
     }

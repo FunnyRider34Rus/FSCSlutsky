@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -13,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -67,6 +69,11 @@ fun FSCSlutckyBottomBar(navController: NavController) {
 
     if (bottomBarDestination) {
         NavigationBar(
+            modifier = Modifier
+                .graphicsLayer(
+                shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
+                clip = true
+            ),
             containerColor = MaterialTheme.colorScheme.background
         ) {
             bottomBarScreens.forEach { screen ->

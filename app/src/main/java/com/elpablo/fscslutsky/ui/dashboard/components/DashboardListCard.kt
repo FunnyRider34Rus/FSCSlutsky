@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
@@ -25,11 +26,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.elpablo.fscslutsky.core.components.FSCSlutskyLoader
 import com.elpablo.fscslutsky.core.components.FSCSlutskyPageIndicator
 import com.elpablo.fscslutsky.core.components.FSCSlutskyVideoPlayer
 import com.elpablo.fscslutsky.core.utils.timeAgo
 import com.elpablo.fscslutsky.domain.model.AttachmentType
-import com.elpablo.fscslutsky.domain.model.VkWall
+import com.elpablo.fscslutsky.ui.dashboard.list.DashboardListEvent
+import com.elpablo.fscslutsky.ui.dashboard.list.DashboardListViewState
 import com.google.firebase.Timestamp
 import sh.calvin.autolinktext.rememberAutoLinkText
 import kotlin.math.absoluteValue
@@ -37,18 +40,22 @@ import kotlin.math.absoluteValue
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun DashboardListCard(
-    post: VkWall,
+    uiState: DashboardListViewState,
+    onEvent: (DashboardListEvent) -> Unit,
+    indexOfPost: Int,
     onNavigateToDetail: (String?) -> Unit
 ) {
     Box(
         modifier = Modifier
-            .padding(bottom = 16.dp)
             .clip(RoundedCornerShape(16.dp))
             .background(MaterialTheme.colorScheme.background)
+            .clickable {
+                onNavigateToDetail(uiState.posts[indexOfPost].id.toString())
+            }
     ) {
 
         val pagerState = rememberPagerState(pageCount = {
-            post.attachments?.size ?: 0
+            uiState.posts[indexOfPost].attachments?.size ?: 0
         })
         Column(
             modifier = Modifier
@@ -56,14 +63,14 @@ fun DashboardListCard(
         ) {
             HorizontalPager(
                 state = pagerState
-            ) { page ->
+            ) { indexOfAttachments ->
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .aspectRatio(16 / 9f)
                         .graphicsLayer {
                             val pageOffset = (
-                                    (pagerState.currentPage - page) + pagerState
+                                    (pagerState.currentPage - indexOfAttachments) + pagerState
                                         .currentPageOffsetFraction
                                     ).absoluteValue
                             alpha = lerp(
@@ -71,50 +78,44 @@ fun DashboardListCard(
                                 stop = 1f,
                                 fraction = 1f - pageOffset.coerceIn(0f, 1f)
                             )
-                        }
-                        .clickable {
-                            onNavigateToDetail(post.id.toString())
                         },
                     contentAlignment = Alignment.Center
                 ) {
-                    val item = post.attachments?.get(page)
-                    when (item?.type) {
-                         AttachmentType.PHOTO -> {
+                    when (uiState.posts[indexOfPost].attachments?.get(indexOfAttachments)?.type) {
+                        AttachmentType.PHOTO -> {
                             GlideImage(
                                 modifier = Modifier
                                     .blur(8.dp),
-                                model = item.photo?.sizes?.last()?.url,
+                                model = uiState.posts[indexOfPost].attachments?.get(indexOfAttachments)?.photo?.sizes?.get(2)?.url,
                                 contentDescription = null,
                                 contentScale = ContentScale.FillWidth
                             )
                             GlideImage(
-                                model = item.photo?.sizes?.last()?.url,
+                                model = uiState.posts[indexOfPost].attachments?.get(indexOfAttachments)?.photo?.sizes?.get(2)?.url,
                                 contentDescription = null,
                                 contentScale = ContentScale.FillHeight
                             )
                         }
 
                         AttachmentType.VIDEO -> {
-                            item.video?.player?.let { url -> FSCSlutskyVideoPlayer(videoUrl = url) }
-//                            GlideImage(
-//                                modifier = Modifier
-//                                    .blur(8.dp),
-//                                model = item.video?.image?.last()?.url,
-//                                contentDescription = null,
-//                                contentScale = ContentScale.FillWidth
-//                            )
-//                            GlideImage(
-//                                model = item.video?.image?.last()?.url,
-//                                contentDescription = null,
-//                                contentScale = ContentScale.FillHeight
-//                            )
+                            LaunchedEffect(true) {
+                                onEvent(DashboardListEvent.GetVideoByID(uiState.posts[indexOfPost].attachments?.get(indexOfAttachments)?.video?.id, indexOfPost, indexOfAttachments))
+                            }
+                            if (uiState.posts[indexOfPost].attachments?.get(indexOfAttachments)?.video?.player != null) {
+                                FSCSlutskyVideoPlayer(
+                                    modifier = Modifier.fillMaxWidth().aspectRatio(16 / 9f),
+                                    videoURI = uiState.posts[indexOfPost].attachments?.get(indexOfAttachments)?.video?.player.toString()
+                                )
+                            } else {
+                                FSCSlutskyLoader()
+                            }
                         }
 
                         else -> {
                             null
                         }
                     }
-                    post.attachments?.size.let { count ->
+                    uiState.posts[indexOfPost].attachments?.size.let { count ->
                         if (count!! > 1) {
                             FSCSlutskyPageIndicator(
                                 pageCount = count,
@@ -125,7 +126,7 @@ fun DashboardListCard(
                     }
                 }
             }
-            post.text?.let { text ->
+            uiState.posts[indexOfPost].text?.let { text ->
                 Text(
                     text = AnnotatedString
                         .rememberAutoLinkText(
@@ -141,7 +142,7 @@ fun DashboardListCard(
                 )
             }
             Text(
-                text = timeAgo(post.date?.toLong()?.let { Timestamp(it, 0) }),
+                text = timeAgo(uiState.posts[indexOfPost].date?.toLong()?.let { Timestamp(it, 0) }),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(end = 16.dp, bottom = 16.dp),

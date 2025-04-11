@@ -4,11 +4,9 @@ package com.elpablo.fscslutsky.core.navigation
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -34,9 +32,7 @@ import com.elpablo.fscslutsky.ui.shop.ShopScreen
 @Composable
 fun SetupNavGraph(navController: NavHostController, startDestination: String) {
     Scaffold(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
+        modifier = Modifier.fillMaxSize(),
         topBar = { FSCSSlutskyTitle(navController = navController) },
         bottomBar = { FSCSlutckyBottomBar(navController = navController) }
     ) { paddingValues ->
@@ -97,8 +93,8 @@ fun SetupNavGraph(navController: NavHostController, startDestination: String) {
                 val state by viewModel.viewState.collectAsStateWithLifecycle()
                 DashboardDetailScreen(
                     modifier = modifier,
-                    viewModel = viewModel,
                     state = state,
+                    onEvent = viewModel::onEvent,
                     id = id
                 )
             }

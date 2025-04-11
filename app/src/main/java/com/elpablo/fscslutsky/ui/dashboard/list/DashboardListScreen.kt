@@ -2,7 +2,10 @@ package com.elpablo.fscslutsky.ui.dashboard.list
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
@@ -22,21 +25,25 @@ fun DashboardListScreen(
     onNavigateToDetail: (String?) -> Unit
 ) {
     val scrollState = rememberLazyListState()
-    if (uiState.isLoading) {
+    if (uiState.isPostLoading) {
         FSCSlutskyLoader()
     }
     LazyColumn(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
+            .padding(top = 100.dp)
             .background(MaterialTheme.colorScheme.tertiary.copy(alpha = 0.3f)),
         state = scrollState,
         contentPadding = PaddingValues(16.dp)
     ) {
         items(uiState.posts.size) { index ->
             DashboardListCard(
-                post = uiState.posts[index],
+                uiState = uiState,
+                onEvent = onEvent,
+                indexOfPost = index,
                 onNavigateToDetail = onNavigateToDetail
             )
+            Spacer(modifier = Modifier.height(16.dp))
         }
 
     }

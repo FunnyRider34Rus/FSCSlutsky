@@ -105,12 +105,10 @@ dependencies {
     implementation(libs.vk.id)
     implementation(libs.vk.id.support)
     implementation(libs.vk.id.onetap)
-    //Media3
-    implementation(libs.exoplayer)
-    implementation(libs.exoplayer.dash)
-    implementation(libs.exoplayer.ui)
     //Glide
     implementation(libs.glide)
+    //Webkit
+    implementation(libs.webkit)
 
     //Desugaring
     coreLibraryDesugaring(libs.desugaring)

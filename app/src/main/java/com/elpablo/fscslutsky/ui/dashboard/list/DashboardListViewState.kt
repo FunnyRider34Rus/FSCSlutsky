@@ -4,7 +4,8 @@ import com.elpablo.fscslutsky.domain.model.VkWall
 
 data class DashboardListViewState(
     val posts: List<VkWall> = emptyList(),
-    val isLoading: Boolean = false,
+    val isPostLoading: Boolean = false,
+    val isVideoLoading: Boolean = false,
     val isError: Boolean = false,
     val error: String = "",
 )

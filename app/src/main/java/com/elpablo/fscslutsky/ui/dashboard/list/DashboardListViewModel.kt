@@ -4,10 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.elpablo.fscslutsky.core.utils.Response
 import com.elpablo.fscslutsky.core.utils.VK_WALL_COUNT
-import com.elpablo.fscslutsky.domain.model.AttachmentType
-import com.elpablo.fscslutsky.domain.model.VkWall
-import com.elpablo.fscslutsky.domain.model.toVkWall
-import com.elpablo.fscslutsky.domain.model.toVkWallVideo
 import com.elpablo.fscslutsky.domain.repository.VkSDKRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -18,14 +14,19 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DashboardListViewModel @Inject constructor(private val repository: VkSDKRepository) :
-    ViewModel() {
+class DashboardListViewModel @Inject constructor(
+    private val repository: VkSDKRepository,
+) : ViewModel() {
     private val _viewState = MutableStateFlow(DashboardListViewState())
     val viewState: StateFlow<DashboardListViewState> = _viewState
 
     private var offset = VK_WALL_COUNT
 
     init {
+        initialData()
+    }
+
+    private fun initialData() {
         getPosts()
     }
 
@@ -33,64 +34,19 @@ class DashboardListViewModel @Inject constructor(private val repository: VkSDKRe
         viewModelScope.launch(Dispatchers.IO) {
             repository.getVKWallPosts(offset).collect { result ->
                 when (result) {
-
                     is Response.Loading -> {
                         _viewState.update { state ->
-                            state.copy(isLoading = true)
+                            state.copy(isPostLoading = true)
                         }
                     }
 
                     is Response.Success -> {
-                        var stateVkPosts: MutableList<VkWall> = mutableListOf()
                         result.data?.let { data ->
-                            data.forEach { item ->
-                                stateVkPosts.add(item.toVkWall())
-                            }
-                        }
-                        viewModelScope.launch(Dispatchers.IO) {
-                            stateVkPosts.forEachIndexed { indexOfPost, item ->
-                                item.attachments?.forEachIndexed { indexOfAttachment, attachment ->
-                                    when (attachment.type) {
-                                        AttachmentType.VIDEO -> {
-                                            repository.getVKWallVideoById(attachment.video?.id)
-                                                .collect { result ->
-                                                    when (result) {
-                                                        is Response.Loading -> {
-                                                            _viewState.update { state ->
-                                                                state.copy(isLoading = true)
-                                                            }
-                                                        }
-
-                                                        is Response.Success -> {
-                                                            stateVkPosts[indexOfPost].attachments?.get(indexOfAttachment)?.video = result.data?.toVkWallVideo()
-                                                            _viewState.update { state ->
-                                                                state.copy(posts = stateVkPosts, isLoading = false)
-                                                            }
-                                                        }
-
-                                                        is Response.Failure -> {
-                                                            _viewState.update { state ->
-                                                                state.copy(
-                                                                    isError = true,
-                                                                    error = result.e?.localizedMessage
-                                                                        ?: "Unexpected Error",
-                                                                    isLoading = false
-                                                                )
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                        }
-
-                                        AttachmentType.PHOTO -> {
-                                            _viewState.update { state ->
-                                                state.copy(posts = stateVkPosts, isLoading = false)
-                                            }
-                                        }
-                                        null -> {  }
-                                    }
-
-                                }
+                            _viewState.update { state ->
+                                state.copy(
+                                    posts = result.data,
+                                    isPostLoading = false
+                                )
                             }
                         }
                         offset += VK_WALL_COUNT
@@ -101,7 +57,7 @@ class DashboardListViewModel @Inject constructor(private val repository: VkSDKRe
                             state.copy(
                                 isError = true,
                                 error = result.e?.localizedMessage ?: "Unexpected Error",
-                                isLoading = false
+                                isPostLoading = false
                             )
                         }
                     }
@@ -110,40 +66,50 @@ class DashboardListViewModel @Inject constructor(private val repository: VkSDKRe
         }
     }
 
-    private fun getVideoByID(id: Int?) = viewModelScope.launch(Dispatchers.IO) {
-        repository.getVKWallVideoById(id).collect { result ->
-            when (result) {
-                is Response.Loading -> {
-                    _viewState.update { state ->
-                        state.copy(isLoading = true)
+
+    private fun getVideoByID(id: Int?, indexOfPost: Int, indexOfAttachment: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            var temp = _viewState.value.posts
+            repository.getVKWallVideoById(id).collect { result ->
+                when (result) {
+                    is Response.Loading -> {
+                        _viewState.update { state ->
+                            state.copy(isVideoLoading = true)
+                        }
                     }
-                }
 
-                is Response.Success -> {
+                    is Response.Success -> {
+                        temp[indexOfPost].attachments?.get(indexOfAttachment)?.video = result.data
+                        _viewState.update { state ->
+                            state.copy(
+                                posts = temp,
+                                isVideoLoading = false
+                            )
+                        }
+                    }
 
-                }
-
-                is Response.Failure -> {
-                    _viewState.update { state ->
-                        state.copy(
-                            isError = true,
-                            error = result.e?.localizedMessage ?: "Unexpected Error",
-                            isLoading = false
-                        )
+                    is Response.Failure -> {
+                        _viewState.update { state ->
+                            state.copy(
+                                isError = true,
+                                error = result.e?.localizedMessage ?: "Unexpected Error",
+                                isVideoLoading = false
+                            )
+                        }
                     }
                 }
             }
         }
     }
 
-    fun onEvent(event: DashboardListEvent) = viewModelScope.launch(Dispatchers.IO) {
+    fun onEvent(event: DashboardListEvent) {
         when (event) {
             is DashboardListEvent.NextRequest -> {
                 getPosts()
             }
 
             is DashboardListEvent.GetVideoByID -> {
-                getVideoByID(event.id)
+                getVideoByID(event.id, event.indexOfPost, event.indexOfAttachment)
             }
         }
     }

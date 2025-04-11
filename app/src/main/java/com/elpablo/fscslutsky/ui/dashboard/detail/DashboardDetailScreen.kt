@@ -9,15 +9,15 @@ import com.elpablo.fscslutsky.ui.dashboard.components.DashboardDetailCard
 @Composable
 fun DashboardDetailScreen(
     modifier: Modifier,
-    viewModel: DashboardDetailViewModel,
     state: DashboardDetailViewState,
+    onEvent: (DashboardDetailEvent) -> Unit,
     id: String?
 ) {
     LaunchedEffect(null) {
-        viewModel.getPostByID(id?.toInt())
+        onEvent(DashboardDetailEvent.GetPostByID(id?.toInt()))
     }
-    if (state.isLoading) {
+    if (state.isPostLoading) {
         FSCSlutskyLoader()
     }
-    DashboardDetailCard(modifier = modifier, state = state)
+    DashboardDetailCard(modifier = modifier, state = state, onEvent = onEvent)
 }

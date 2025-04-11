@@ -1,6 +1,9 @@
 package com.elpablo.fscslutsky.ui.profile
 
 import androidx.activity.compose.LocalActivity
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.elpablo.fscslutsky.core.components.FSCSlutskyAlertDialog
@@ -18,7 +21,9 @@ fun ProfileScreen(
     }
     if (uiState.user != null) {
         UserProfileScreen(
-            modifier = modifier,
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.tertiary.copy(alpha = 0.3f)),
             uiState = uiState
         )
     }

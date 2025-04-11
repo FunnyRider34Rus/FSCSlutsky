@@ -83,7 +83,7 @@ class VkSDKRepositoryImpl @Inject constructor() : VkSDKRepository {
             awaitClose { callback }
         }
 
-    override suspend fun getVKWallVideoById(id: Int?): Flow<Response<VkWallVideo>> = callbackFlow {
+    override suspend fun getVKWallVideoById(id: Int?, ownerId: Long?): Flow<Response<VkWallVideo>> = callbackFlow {
         trySend(Response.Loading)
         val callback = object : VKApiCallback<VideoGetResponseDto> {
             override fun success(result: VideoGetResponseDto) {
@@ -101,7 +101,7 @@ class VkSDKRepositoryImpl @Inject constructor() : VkSDKRepository {
             VideoService()
                 .videoGet(
                     ownerId = UserId(VK_ID_COMMUNITY),
-                    videos = listOf(VK_ID_COMMUNITY.toString() + "_" + id.toString())
+                    videos = listOf(ownerId.toString() + "_" + id.toString())
                 )
                 .withVKIDToken(),
             callback

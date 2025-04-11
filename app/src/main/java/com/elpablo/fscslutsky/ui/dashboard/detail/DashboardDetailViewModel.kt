@@ -52,7 +52,7 @@ class DashboardDetailViewModel @Inject constructor(private val repository: VkSDK
     private fun getVideo(id: Int?, indexOfAttachment: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             var temp = _viewState.value.content
-            repository.getVKWallVideoById(id).collect { result ->
+            repository.getVKWallVideoById(id, temp?.attachments?.get(indexOfAttachment)?.video?.ownerId).collect { result ->
                 when (result) {
                     is Response.Loading -> {
                         _viewState.update { state ->

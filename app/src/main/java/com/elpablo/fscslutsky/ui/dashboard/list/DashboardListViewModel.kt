@@ -70,7 +70,7 @@ class DashboardListViewModel @Inject constructor(
     private fun getVideoByID(id: Int?, indexOfPost: Int, indexOfAttachment: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             var temp = _viewState.value.posts
-            repository.getVKWallVideoById(id).collect { result ->
+            repository.getVKWallVideoById(id = id, ownerId = temp[indexOfPost].attachments?.get(indexOfAttachment)?.video?.ownerId).collect { result ->
                 when (result) {
                     is Response.Loading -> {
                         _viewState.update { state ->

@@ -35,6 +35,7 @@ data class VkWallPhotoSize(
 
 data class VkWallVideo(
     var id: Int?,
+    var ownerId: Long?,
     var image: List<VkWallVideoImage>?,
     var player: String?
 )
@@ -91,6 +92,7 @@ fun PhotosPhotoSizesDto.toVkWallPhotoSize(): VkWallPhotoSize {
 fun VideoVideoFullDto.toVkWallVideo(): VkWallVideo {
     return VkWallVideo(
         id = this.id,
+        ownerId = this.ownerId?.value,
         image = this.image?.map { it.toVkWallVideoImage() },
         player = this.player
     )

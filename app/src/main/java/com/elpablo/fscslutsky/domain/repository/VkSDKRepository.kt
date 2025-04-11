@@ -9,5 +9,5 @@ import kotlinx.coroutines.flow.Flow
 interface VkSDKRepository {
     suspend fun getVKWallPosts(offset: Int): Flow<Response<List<VkWall>>>
     suspend fun getVKWallPostByID(id: Int?): Flow<Response<WallWallItemDto.WallWallpostFullDto>>
-    suspend fun getVKWallVideoById(id: Int?): Flow<Response<VkWallVideo>>
+    suspend fun getVKWallVideoById(id: Int?, ownerId: Long?): Flow<Response<VkWallVideo>>
 }

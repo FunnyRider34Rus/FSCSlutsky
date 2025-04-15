@@ -1,6 +1,6 @@
 package com.elpablo.fscslutsky.core.utils
 
-//Утилитарный класс для работы с FIREBASE
+//Утилитарный класс для работы с сетевыми запросами
 sealed class Response<out T> {
     data object Loading : Response<Nothing>()
 
@@ -14,17 +14,12 @@ sealed class Response<out T> {
 }
 
 //Firestore Collection References
-const val FIRESTORE_NODE_NEWS = "News"
+const val FIRESTORE_NODE_MATCHES = "Matches"
 
-//Firestore Collection Fields
+const val FIRESTORE_NODE_CLUBS = "Clubs"
+
 const val FIRESTORE_NODE_NEWS_TIMESTAMP = "date"
 
-//DataStore Preferences
-const val DATASTORE_PREFERENCES_USER_PREFERENCES = "user_prefs"
-
-//Лимит на количество item в одном запросе
-const val FIRESTORE_LIMIT_QUERY = 5L
-
 //Лимит на количество item в списке
-const val VK_WALL_COUNT = 20
+const val VK_WALL_COUNT = 10
 const val VK_ID_COMMUNITY = -191885529L

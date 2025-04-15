@@ -1,6 +1,7 @@
 package com.elpablo.fscslutsky.ui.dashboard.components
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.pager.HorizontalPager
@@ -16,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.elpablo.fscslutsky.core.components.FSCSlutskyLoader
 import com.elpablo.fscslutsky.core.components.FSCSlutskyPageIndicator
 import com.elpablo.fscslutsky.core.components.FSCSlutskyVideoPlayer
 import com.elpablo.fscslutsky.domain.model.AttachmentType
@@ -28,11 +28,11 @@ import kotlin.math.absoluteValue
 @Composable
 fun DashboardDetailCard(
     modifier: Modifier = Modifier,
-    state: DashboardDetailViewState,
+    uiState: DashboardDetailViewState,
     onEvent: (DashboardDetailEvent) -> Unit
 ) {
     val pagerState = rememberPagerState(pageCount = {
-        state.content?.attachments?.size ?: 0
+        uiState.content?.attachments?.size ?: 0
     })
     HorizontalPager(
         modifier = modifier
@@ -55,7 +55,7 @@ fun DashboardDetailCard(
                 },
             contentAlignment = Alignment.Center
         ) {
-            val item = state.content?.attachments?.get(indexOfAttachments)
+            val item = uiState.content?.attachments?.get(indexOfAttachments)
             when (item?.type) {
                 AttachmentType.PHOTO -> {
                     GlideImage(
@@ -75,32 +75,28 @@ fun DashboardDetailCard(
                     LaunchedEffect(true) {
                         onEvent(DashboardDetailEvent.GetVideoByID(item.video?.id, indexOfAttachments))
                     }
-                    if (item.video?.player != null) {
-                        GlideImage(
-                            modifier = Modifier.blur(8.dp),
-                            model = item.video?.image?.last()?.url,
-                            contentDescription = null,
-                            contentScale = ContentScale.FillHeight
-                        )
-                        FSCSlutskyVideoPlayer(
-                            modifier = Modifier.fillMaxWidth(),
-                            videoURI = item.video?.player.toString())
-                    } else {
-                        FSCSlutskyLoader()
+                    if (!uiState.isVideoLoading) {
+                        item.video?.player?.let { url ->
+                            FSCSlutskyVideoPlayer(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .aspectRatio(16 / 9f),
+                                videoURI = url
+                            )
+                        }
                     }
                 }
-
-                else -> {
-                    null
-                }
+                null -> {  }
             }
-            state.content?.attachments?.size.let { count ->
-                if (count!! > 1) {
-                    FSCSlutskyPageIndicator(
-                        pageCount = count,
-                        currentPageIndex = pagerState.currentPage,
-                        modifier = Modifier.align(Alignment.BottomCenter)
-                    )
+            uiState.content?.attachments?.size.let { count ->
+                count?.let { count ->
+                    if (count > 1) {
+                        FSCSlutskyPageIndicator(
+                            pageCount = count,
+                            currentPageIndex = pagerState.currentPage,
+                            modifier = Modifier.align(Alignment.BottomCenter)
+                        )
+                    }
                 }
             }
         }

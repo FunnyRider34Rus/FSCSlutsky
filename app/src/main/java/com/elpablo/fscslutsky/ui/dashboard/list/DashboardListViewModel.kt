@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.elpablo.fscslutsky.core.utils.Response
 import com.elpablo.fscslutsky.core.utils.VK_WALL_COUNT
+import com.elpablo.fscslutsky.domain.repository.MatchesRepository
 import com.elpablo.fscslutsky.domain.repository.VkSDKRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DashboardListViewModel @Inject constructor(
-    private val repository: VkSDKRepository,
+    private val vkRepository: VkSDKRepository,
+    private val matchesRepository: MatchesRepository
 ) : ViewModel() {
     private val _viewState = MutableStateFlow(DashboardListViewState())
     val viewState: StateFlow<DashboardListViewState> = _viewState
@@ -28,11 +30,13 @@ class DashboardListViewModel @Inject constructor(
 
     private fun initialData() {
         getPosts()
+        getMatches()
+        getClubs()
     }
 
     private fun getPosts() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.getVKWallPosts(offset).collect { result ->
+            vkRepository.getVKWallPosts(offset).collect { result ->
                 when (result) {
                     is Response.Loading -> {
                         _viewState.update { state ->
@@ -70,7 +74,10 @@ class DashboardListViewModel @Inject constructor(
     private fun getVideoByID(id: Int?, indexOfPost: Int, indexOfAttachment: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             var temp = _viewState.value.posts
-            repository.getVKWallVideoById(id = id, ownerId = temp[indexOfPost].attachments?.get(indexOfAttachment)?.video?.ownerId).collect { result ->
+            vkRepository.getVKWallVideoById(
+                id = id,
+                ownerId = temp[indexOfPost].attachments?.get(indexOfAttachment)?.video?.ownerId
+            ).collect { result ->
                 when (result) {
                     is Response.Loading -> {
                         _viewState.update { state ->
@@ -110,6 +117,106 @@ class DashboardListViewModel @Inject constructor(
 
             is DashboardListEvent.GetVideoByID -> {
                 getVideoByID(event.id, event.indexOfPost, event.indexOfAttachment)
+            }
+        }
+    }
+
+    private fun getMatches() {
+        viewModelScope.launch(Dispatchers.IO) {
+            matchesRepository.getUpcomingMatches().collect { result ->
+                when (result) {
+                    Response.Loading -> {
+                        _viewState.update { state ->
+                            state.copy(isPostLoading = true)
+                        }
+                    }
+
+                    is Response.Success -> {
+                        if (result.data != null) {
+                            _viewState.update { state ->
+                                state.copy(
+                                    matches = result.data,
+                                    isPostLoading = false
+                                )
+                            }
+                        }
+                    }
+
+                    is Response.Failure -> {
+                        _viewState.update { state ->
+                            state.copy(
+                                isError = true,
+                                error = result.e?.localizedMessage ?: "Unexpected Error",
+                                isPostLoading = false
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getClubs() {
+        viewModelScope.launch(Dispatchers.IO) {
+            matchesRepository.getClubs().collect { result ->
+                when (result) {
+                    Response.Loading -> {
+                        _viewState.update { state ->
+                            state.copy(isPostLoading = true)
+                        }
+                    }
+
+                    is Response.Success -> {
+                        if (result.data != null) {
+                            _viewState.update { state ->
+                                state.copy(
+                                    clubs = result.data,
+                                    isPostLoading = false
+                                )
+                            }
+                            getAwayClub()
+                            getHomeClub()
+                        }
+                    }
+
+                    is Response.Failure -> {
+                        _viewState.update { state ->
+                            state.copy(
+                                isError = true,
+                                error = result.e?.localizedMessage ?: "Unexpected Error",
+                                isPostLoading = false
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getHomeClub() {
+        for (club in _viewState.value.clubs) {
+            if (_viewState.value.matches.isNotEmpty()) {
+                if (club.id == _viewState.value.matches.first().homeId) {
+                    _viewState.update { state ->
+                        state.copy(
+                            homeClub = club
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getAwayClub() {
+        for (club in _viewState.value.clubs) {
+            if (_viewState.value.matches.isNotEmpty()) {
+                if (club.id == _viewState.value.matches.first().awayId) {
+                    _viewState.update { state ->
+                        state.copy(
+                            awayClub = club
+                        )
+                    }
+                }
             }
         }
     }

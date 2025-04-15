@@ -62,7 +62,7 @@ fun AuthScreen(
                 sizeStyle = OneTapButtonSizeStyle.DEFAULT
             ),
             authParams = VKIDAuthUiParams {
-                scopes = setOf("video")
+                scopes = setOf("wall", "video")
             }
         )
     }

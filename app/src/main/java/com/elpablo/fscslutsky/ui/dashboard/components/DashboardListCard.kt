@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.elpablo.fscslutsky.core.components.FSCSlutskyLoader
 import com.elpablo.fscslutsky.core.components.FSCSlutskyPageIndicator
 import com.elpablo.fscslutsky.core.components.FSCSlutskyVideoPlayer
 import com.elpablo.fscslutsky.core.utils.timeAgo
@@ -86,12 +85,16 @@ fun DashboardListCard(
                             GlideImage(
                                 modifier = Modifier
                                     .blur(8.dp),
-                                model = uiState.posts[indexOfPost].attachments?.get(indexOfAttachments)?.photo?.sizes?.get(2)?.url,
+                                model = uiState.posts[indexOfPost].attachments?.get(
+                                    indexOfAttachments
+                                )?.photo?.sizes?.get(2)?.url,
                                 contentDescription = null,
                                 contentScale = ContentScale.FillWidth
                             )
                             GlideImage(
-                                model = uiState.posts[indexOfPost].attachments?.get(indexOfAttachments)?.photo?.sizes?.get(2)?.url,
+                                model = uiState.posts[indexOfPost].attachments?.get(
+                                    indexOfAttachments
+                                )?.photo?.sizes?.get(2)?.url,
                                 contentDescription = null,
                                 contentScale = ContentScale.FillHeight
                             )
@@ -99,21 +102,27 @@ fun DashboardListCard(
 
                         AttachmentType.VIDEO -> {
                             LaunchedEffect(true) {
-                                onEvent(DashboardListEvent.GetVideoByID(uiState.posts[indexOfPost].attachments?.get(indexOfAttachments)?.video?.id, indexOfPost, indexOfAttachments))
-                            }
-                            if (uiState.posts[indexOfPost].attachments?.get(indexOfAttachments)?.video?.player != null) {
-                                FSCSlutskyVideoPlayer(
-                                    modifier = Modifier.fillMaxWidth().aspectRatio(16 / 9f),
-                                    videoURI = uiState.posts[indexOfPost].attachments?.get(indexOfAttachments)?.video?.player.toString()
+                                onEvent(
+                                    DashboardListEvent.GetVideoByID(
+                                        uiState.posts[indexOfPost].attachments?.get(
+                                            indexOfAttachments
+                                        )?.video?.id, indexOfPost, indexOfAttachments
+                                    )
                                 )
-                            } else {
-                                FSCSlutskyLoader()
+                            }
+                            if (!uiState.isVideoLoading) {
+                                uiState.posts[indexOfPost].attachments?.get(indexOfAttachments)?.video?.player?.let { url ->
+                                    FSCSlutskyVideoPlayer(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .aspectRatio(16 / 9f),
+                                        videoURI = url
+                                    )
+                                }
                             }
                         }
 
-                        else -> {
-                            null
-                        }
+                        null -> {}
                     }
                     uiState.posts[indexOfPost].attachments?.size.let { count ->
                         if (count!! > 1) {

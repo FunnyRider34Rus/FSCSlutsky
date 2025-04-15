@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.elpablo.fscslutsky.core.components.FSCSlutskyLoader
 import com.elpablo.fscslutsky.core.utils.isScrolledToEnd
 import com.elpablo.fscslutsky.ui.dashboard.components.DashboardListCard
+import com.elpablo.fscslutsky.ui.dashboard.components.DashboardMatchTopCard
 
 @Composable
 fun DashboardListScreen(
@@ -36,6 +37,9 @@ fun DashboardListScreen(
         state = scrollState,
         contentPadding = PaddingValues(16.dp)
     ) {
+        item {
+            Spacer(modifier = Modifier.height(80.dp))
+        }
         items(uiState.posts.size) { index ->
             DashboardListCard(
                 uiState = uiState,
@@ -45,8 +49,8 @@ fun DashboardListScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
         }
-
     }
+    DashboardMatchTopCard(uiState = uiState)
     if (scrollState.isScrolledToEnd()) {
         LaunchedEffect(scrollState.isScrolledToEnd()) {
             onEvent(DashboardListEvent.NextRequest)

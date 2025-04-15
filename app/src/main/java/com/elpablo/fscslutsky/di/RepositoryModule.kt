@@ -2,10 +2,13 @@ package com.elpablo.fscslutsky.di
 
 import android.content.Context
 import com.elpablo.fscslutsky.data.repository.ConnectivityObserverImpl
+import com.elpablo.fscslutsky.data.repository.MatchesRepositoryImpl
 import com.elpablo.fscslutsky.data.repository.VkSDKRepositoryImpl
 import com.elpablo.fscslutsky.domain.model.User
 import com.elpablo.fscslutsky.domain.repository.ConnectivityObserver
+import com.elpablo.fscslutsky.domain.repository.MatchesRepository
 import com.elpablo.fscslutsky.domain.repository.VkSDKRepository
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,4 +30,8 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideCurrentUser(): User? = User()
+
+    @Provides
+    @Singleton
+    fun provideMatchesRepository(firestore: FirebaseFirestore): MatchesRepository = MatchesRepositoryImpl(firestore = firestore)
 }

@@ -14,6 +14,12 @@ fun timestampToDate(timestamp: Timestamp?): String? {
     return simpleDateFormat.format(long)
 }
 
+fun timestampToTime(timestamp: Timestamp?): String? {
+    val long = (timestamp?.seconds?.times(1000) ?: 0) + (timestamp?.nanoseconds?.div(1000000) ?: 0)
+    val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+    return simpleDateFormat.format(long)
+}
+
 fun longToDate(timestamp: Long?): String? {
     val simpleDateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
     return simpleDateFormat.format(timestamp)

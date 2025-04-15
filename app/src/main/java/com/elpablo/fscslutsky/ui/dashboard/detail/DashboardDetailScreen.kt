@@ -19,5 +19,5 @@ fun DashboardDetailScreen(
     if (state.isPostLoading) {
         FSCSlutskyLoader()
     }
-    DashboardDetailCard(modifier = modifier, state = state, onEvent = onEvent)
+    DashboardDetailCard(modifier = modifier, uiState = state, onEvent = onEvent)
 }

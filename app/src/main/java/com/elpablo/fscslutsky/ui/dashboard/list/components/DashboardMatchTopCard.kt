@@ -1,4 +1,4 @@
-package com.elpablo.fscslutsky.ui.dashboard.components
+package com.elpablo.fscslutsky.ui.dashboard.list.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

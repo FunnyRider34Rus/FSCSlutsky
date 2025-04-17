@@ -15,8 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.elpablo.fscslutsky.core.components.FSCSlutskyLoader
 import com.elpablo.fscslutsky.core.utils.isScrolledToEnd
-import com.elpablo.fscslutsky.ui.dashboard.components.DashboardListCard
-import com.elpablo.fscslutsky.ui.dashboard.components.DashboardMatchTopCard
+import com.elpablo.fscslutsky.ui.dashboard.list.components.DashboardListCard
+import com.elpablo.fscslutsky.ui.dashboard.list.components.DashboardMatchTopCard
 
 @Composable
 fun DashboardListScreen(

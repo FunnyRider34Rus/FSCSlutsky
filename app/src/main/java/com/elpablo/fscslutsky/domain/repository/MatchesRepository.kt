@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface MatchesRepository {
     suspend fun getClubs(): Flow<Response<List<Club>>>
-    suspend fun getUpcomingMatches(): Flow<Response<List<Match>>>
+    suspend fun getUpcomingMatches(): Flow<Response<List<Match?>?>>
 }

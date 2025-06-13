@@ -22,14 +22,16 @@ import com.vk.id.onetap.compose.onetap.OneTap
 fun AuthScreen(
     modifier: Modifier,
     uiState: AuthViewState,
-    onEvent: (AuthEvent) -> Unit,
+    uiEvent: (AuthEvent) -> Unit,
     onNavigate: () -> Unit
 ) {
     val activity = LocalActivity.current
     if (uiState.isLoggedIn) {
         onNavigate.invoke()
     }
-    if (uiState.isLoading) FSCSlutskyLoader()
+    if (uiState.isLoading) {
+        FSCSlutskyLoader()
+    }
     if (uiState.isError) {
         FSCSlutskyAlertDialog(
             onDismissRequest = {
@@ -48,12 +50,12 @@ fun AuthScreen(
         OneTap(
             modifier = Modifier.padding(bottom = 32.dp).padding(horizontal = 32.dp),
             onAuth = { oAuth, token ->
-                onEvent(AuthEvent.AuthSuccess)
+                uiEvent(AuthEvent.AuthSuccess)
                 Log.d("VKID", "AuthSuccess_token: ${VKID.instance.accessToken?.token}")
                 Log.d("VKID", "AuthSuccess_scope: ${VKID.instance.accessToken?.scopes}")
             },
             onFail = { oAuth, error ->
-                onEvent(AuthEvent.AuthFail(error.description))
+                uiEvent(AuthEvent.AuthFail(error.description))
                 Log.d("VKID", "AuthFailed")
             },
             signInAnotherAccountButtonEnabled = true,

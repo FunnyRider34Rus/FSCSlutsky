@@ -30,7 +30,8 @@ class VkSDKRepositoryImpl @Inject constructor() : VkSDKRepository {
                 result.items.forEachIndexed { indexOfPost, item ->
                     when (item) {
                         is WallWallItemDto.WallWallpostFullDto -> {
-                            response.add(item.toVkWall())
+                            if (item.copyHistory.isNullOrEmpty())
+                                response.add(item.toVkWall())
                         }
 
                         else -> {}

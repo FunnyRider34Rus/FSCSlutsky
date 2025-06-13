@@ -17,7 +17,7 @@ fun DashboardListTextView(
     uiState: DashboardListViewState,
     indexOfPost: Int
 ) {
-    uiState.posts[indexOfPost].text?.let { text ->
+    uiState.posts?.get(indexOfPost)?.text?.let { text ->
         Text(
             text = AnnotatedString
                 .rememberAutoLinkText(

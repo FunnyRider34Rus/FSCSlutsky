@@ -10,18 +10,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
 import com.elpablo.fscslutsky.core.components.FSCSlutskyPageIndicator
 import com.elpablo.fscslutsky.core.components.FSCSlutskyVideoPlayer
 import com.elpablo.fscslutsky.domain.model.AttachmentType
 import com.elpablo.fscslutsky.ui.dashboard.detail.DashboardDetailEvent
 import com.elpablo.fscslutsky.ui.dashboard.detail.DashboardDetailViewState
+import com.elpablo.fscslutsky.ui.dashboard.list.components.DashboardListImageView
 import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalGlideComposeApi::class)
@@ -32,7 +29,7 @@ fun DashboardDetailCard(
     onEvent: (DashboardDetailEvent) -> Unit
 ) {
     val pagerState = rememberPagerState(pageCount = {
-        uiState.content?.attachments?.size ?: 0
+        uiState.post?.attachments?.size ?: 0
     })
     HorizontalPager(
         modifier = modifier
@@ -55,20 +52,10 @@ fun DashboardDetailCard(
                 },
             contentAlignment = Alignment.Center
         ) {
-            val item = uiState.content?.attachments?.get(indexOfAttachments)
+            val item = uiState.post?.attachments?.get(indexOfAttachments)
             when (item?.type) {
                 AttachmentType.PHOTO -> {
-                    GlideImage(
-                        modifier = Modifier.blur(8.dp),
-                        model = item.photo?.sizes?.last()?.url,
-                        contentDescription = null,
-                        contentScale = ContentScale.FillHeight
-                    )
-                    GlideImage(
-                        model = item.photo?.sizes?.last()?.url,
-                        contentDescription = null,
-                        contentScale = ContentScale.FillWidth
-                    )
+                    DashboardListImageView(url = item.photo?.sizes?.last()?.url)
                 }
 
                 AttachmentType.VIDEO -> {
@@ -77,6 +64,7 @@ fun DashboardDetailCard(
                     }
                     if (!uiState.isVideoLoading) {
                         item.video?.player?.let { url ->
+                            DashboardListImageView(url = item.video?.image?.get(2)?.url)
                             FSCSlutskyVideoPlayer(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -88,7 +76,7 @@ fun DashboardDetailCard(
                 }
                 null -> {  }
             }
-            uiState.content?.attachments?.size.let { count ->
+            uiState.post?.attachments?.size.let { count ->
                 count?.let { count ->
                     if (count > 1) {
                         FSCSlutskyPageIndicator(

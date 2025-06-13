@@ -19,7 +19,7 @@ fun DashboardListDateView(
     indexOfPost: Int
 ) {
     Text(
-        text = timeAgo(uiState.posts[indexOfPost].date?.toLong()?.let { Timestamp(it, 0) }),
+        text = timeAgo(uiState.posts?.get(indexOfPost)?.date?.toLong()?.let { Timestamp(it, 0) }),
         modifier = Modifier
             .fillMaxWidth()
             .padding(end = 16.dp, bottom = 16.dp),

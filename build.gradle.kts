@@ -21,8 +21,4 @@ vkidManifestPlaceholders {
         clientId = clientId.toString(),
         clientSecret = clientSecret.toString(),
     )
-//    vkidRedirectHost = "vk.com"
-//    vkidRedirectScheme = "vk53221923"
-//    vkidClientId = clientId.toString()
-//    vkidClientSecret = clientSecret.toString()
 }

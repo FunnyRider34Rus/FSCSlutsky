@@ -5,13 +5,13 @@ import com.elpablo.fscslutsky.domain.model.Match
 import com.elpablo.fscslutsky.domain.model.VkWall
 
 data class DashboardListViewState(
-    val posts: List<VkWall> = emptyList(),
-    val matches: List<Match> = emptyList(),
-    val clubs: List<Club> = emptyList(),
-    val homeClub: Club = Club(),
-    val awayClub: Club = Club(),
+    val posts: List<VkWall>? = null,
+    val matches: List<Match?>? = null,
+    val clubs: List<Club>? = null,
+    val homeClub: Club? = null,
+    val awayClub: Club? = null,
     val isPostLoading: Boolean = false,
     val isVideoLoading: Boolean = false,
     val isError: Boolean = false,
-    val error: String = "",
+    val error: String? = null,
 )

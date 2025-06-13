@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,7 +18,8 @@ import javax.inject.Inject
 class DashboardDetailViewModel @Inject constructor(private val repository: VkSDKRepository) :
     ViewModel() {
     private val _viewState = MutableStateFlow(DashboardDetailViewState())
-    val viewState: StateFlow<DashboardDetailViewState> = _viewState
+    val viewState: StateFlow<DashboardDetailViewState>
+        get() = _viewState.asStateFlow()
 
     fun getPostByID(id: Int?) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -31,7 +33,7 @@ class DashboardDetailViewModel @Inject constructor(private val repository: VkSDK
 
                     is Response.Success -> {
                         _viewState.update { state ->
-                            state.copy(content = result.data?.toVkWall(), isPostLoading = false)
+                            state.copy(post = result.data?.toVkWall(), isPostLoading = false)
                         }
                     }
 
@@ -51,7 +53,7 @@ class DashboardDetailViewModel @Inject constructor(private val repository: VkSDK
 
     private fun getVideo(id: Int?, indexOfAttachment: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            var temp = _viewState.value.content
+            var temp = _viewState.value.post
             repository.getVKWallVideoById(id, temp?.attachments?.get(indexOfAttachment)?.video?.ownerId).collect { result ->
                 when (result) {
                     is Response.Loading -> {
@@ -64,7 +66,7 @@ class DashboardDetailViewModel @Inject constructor(private val repository: VkSDK
                         temp?.attachments?.get(indexOfAttachment)?.video = result.data
                         _viewState.update { state ->
                             state.copy(
-                                content = temp,
+                                post = temp,
                                 isVideoLoading = false
                             )
                         }

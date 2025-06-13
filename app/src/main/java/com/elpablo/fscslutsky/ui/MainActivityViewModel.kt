@@ -11,11 +11,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainActivityViewModel @Inject constructor() : ViewModel() {
     private val _isLoading: MutableState<Boolean> = mutableStateOf(false)
-    val isLoading: State<Boolean> = _isLoading
+    val isLoading: State<Boolean> get() = _isLoading
 
     val isLoggedIn = VKID.instance.accessToken?.token != null
-
-    val isTokenExpaired = VKID.instance.accessToken?.expireTime?.let { expireTime ->
-        expireTime - System.currentTimeMillis() < 0
-    }
 }

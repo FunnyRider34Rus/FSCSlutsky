@@ -1,15 +1,15 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package com.elpablo.fscslutsky.core.navigation
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -31,10 +31,12 @@ import com.elpablo.fscslutsky.ui.shop.ShopScreen
 
 @Composable
 fun SetupNavGraph(navController: NavHostController, startDestination: String) {
+    val snackbarHostState = remember { SnackbarHostState() }
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = { FSCSSlutskyTitle(navController = navController) },
-        bottomBar = { FSCSlutckyBottomBar(navController = navController) }
+        bottomBar = { FSCSlutckyBottomBar(navController = navController) },
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { paddingValues ->
         val modifier = Modifier.padding(paddingValues)
         NavHost(
@@ -71,19 +73,20 @@ fun SetupNavGraph(navController: NavHostController, startDestination: String) {
                 AuthScreen(
                     modifier = modifier,
                     uiState = state,
-                    onEvent = viewModel::onEvent,
+                    uiEvent = viewModel::onEvent,
                     onNavigate = { navController.navigate(Screen.DASHBOARDLIST.route) }
-                    )
+                )
             }
             composable(route = Screen.DASHBOARDLIST.route) {
                 val viewModel = hiltViewModel<DashboardListViewModel>()
                 val state by viewModel.viewState.collectAsStateWithLifecycle()
                 DashboardListScreen(
                     modifier = modifier,
+                    snackbar = snackbarHostState,
                     uiState = state,
                     onEvent = viewModel::onEvent,
                     onNavigateToDetail = { id ->
-                        navController.navigate(Screen.DASHBOARDDETAIL.route+"/$id")
+                        navController.navigate(Screen.DASHBOARDDETAIL.route + "/$id")
                     }
                 )
             }

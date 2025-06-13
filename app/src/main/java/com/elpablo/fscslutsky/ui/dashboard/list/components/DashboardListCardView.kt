@@ -14,19 +14,20 @@ import com.elpablo.fscslutsky.ui.dashboard.list.DashboardListEvent
 import com.elpablo.fscslutsky.ui.dashboard.list.DashboardListViewState
 
 @Composable
-fun DashboardListCard(
+fun DashboardListCardView(
+    modifier: Modifier = Modifier,
     uiState: DashboardListViewState,
     onEvent: (DashboardListEvent) -> Unit,
     indexOfPost: Int,
     onNavigateToDetail: (String?) -> Unit
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
             .background(MaterialTheme.colorScheme.background)
             .clickable {
-                onNavigateToDetail(uiState.posts[indexOfPost].id.toString())
+                onNavigateToDetail(uiState.posts?.get(indexOfPost)?.id?.toString())
             }
     ) {
         DashboardListMediaContentView(

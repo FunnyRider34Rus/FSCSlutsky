@@ -3,21 +3,25 @@ package com.elpablo.fscslutsky.ui.dashboard.list.components
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.elpablo.fscslutsky.R
 import com.elpablo.fscslutsky.core.components.FSCSlutskyPageIndicator
-import com.elpablo.fscslutsky.core.components.FSCSlutskyVideoPlayer
 import com.elpablo.fscslutsky.domain.model.AttachmentType
 import com.elpablo.fscslutsky.ui.dashboard.list.DashboardListEvent
 import com.elpablo.fscslutsky.ui.dashboard.list.DashboardListViewState
@@ -32,7 +36,7 @@ fun DashboardListMediaContentView(
     indexOfPost: Int,
 ) {
     val pagerState = rememberPagerState(pageCount = {
-        uiState.posts[indexOfPost].attachments?.size ?: 0
+        uiState.posts?.get(indexOfPost)?.attachments?.size ?: 0
     })
     HorizontalPager(
         modifier = modifier,
@@ -55,7 +59,7 @@ fun DashboardListMediaContentView(
                 },
             contentAlignment = Alignment.Center
         ) {
-            when (uiState.posts[indexOfPost].attachments?.get(indexOfAttachments)?.type) {
+            when (uiState.posts?.get(indexOfPost)?.attachments?.get(indexOfAttachments)?.type) {
                 AttachmentType.PHOTO -> {
                     GlideImage(
                         modifier = Modifier
@@ -76,30 +80,36 @@ fun DashboardListMediaContentView(
                 }
 
                 AttachmentType.VIDEO -> {
-                    LaunchedEffect(true) {
-                        onEvent(
-                            DashboardListEvent.GetVideoByID(
-                                uiState.posts[indexOfPost].attachments?.get(
-                                    indexOfAttachments
-                                )?.video?.id, indexOfPost, indexOfAttachments
-                            )
-                        )
-                    }
-                    if (!uiState.isVideoLoading) {
-                        uiState.posts[indexOfPost].attachments?.get(indexOfAttachments)?.video?.player?.let { url ->
-                            FSCSlutskyVideoPlayer(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .aspectRatio(16 / 9f),
-                                videoURI = url
-                            )
-                        }
-                    }
+                    GlideImage(
+                        modifier = Modifier
+                            .blur(8.dp),
+                        model = uiState.posts[indexOfPost].attachments?.get(
+                            indexOfAttachments
+                        )?.video?.image?.get(4)?.url,
+                        contentDescription = null,
+                        contentScale = ContentScale.FillWidth
+                    )
+                    GlideImage(
+                        model = uiState.posts[indexOfPost].attachments?.get(
+                            indexOfAttachments
+                        )?.video?.image?.get(4)?.url,
+                        contentDescription = null,
+                        contentScale = ContentScale.FillHeight
+                    )
+                    Icon(
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .size(32.dp)
+                            .align(Alignment.BottomEnd),
+                        painter = painterResource(R.drawable.video_advertisement),
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary
+                    )
                 }
 
                 null -> {}
             }
-            uiState.posts[indexOfPost].attachments?.size.let { count ->
+            uiState.posts?.get(indexOfPost)?.attachments?.size.let { count ->
                 if (count!! > 1) {
                     FSCSlutskyPageIndicator(
                         pageCount = count,

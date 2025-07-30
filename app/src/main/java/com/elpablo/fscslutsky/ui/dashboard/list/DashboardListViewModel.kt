@@ -1,11 +1,9 @@
 package com.elpablo.fscslutsky.ui.dashboard.list
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.elpablo.fscslutsky.core.utils.Response
 import com.elpablo.fscslutsky.core.utils.VK_WALL_COUNT
-import com.elpablo.fscslutsky.domain.repository.MatchesRepository
 import com.elpablo.fscslutsky.domain.repository.VkSDKRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -18,8 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DashboardListViewModel @Inject constructor(
-    private val vkRepository: VkSDKRepository,
-    private val matchesRepository: MatchesRepository
+    private val vkRepository: VkSDKRepository
 ) : ViewModel() {
     private val _viewState = MutableStateFlow(DashboardListViewState())
     val viewState: StateFlow<DashboardListViewState>
@@ -32,7 +29,6 @@ class DashboardListViewModel @Inject constructor(
     }
 
     private fun initialData() {
-        getUpcomingMatches()
         getPosts()
     }
 
@@ -87,7 +83,7 @@ class DashboardListViewModel @Inject constructor(
 
     private fun getVideoByID(id: Int?, indexOfPost: Int?, indexOfAttachment: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            var temp = _viewState.value.posts
+            val temp = _viewState.value.posts
             vkRepository.getVKWallVideoById(
                 id = id,
                 ownerId = indexOfPost?.let { index -> temp?.get(index) }?.attachments?.get(
@@ -120,110 +116,6 @@ class DashboardListViewModel @Inject constructor(
                                 error = result.e?.localizedMessage
                             )
                         }
-                    }
-                }
-            }
-        }
-    }
-
-    private fun getUpcomingMatches() {
-        viewModelScope.launch(Dispatchers.IO) {
-            getClubs()
-            getAllUpcomingMatches()
-        }
-    }
-
-    private suspend fun getAllUpcomingMatches() {
-        matchesRepository.getUpcomingMatches().collect { result ->
-            when (result) {
-                Response.Loading -> {
-                    _viewState.update { state ->
-                        state.copy(isPostLoading = true)
-                    }
-                }
-
-                is Response.Success -> {
-                    if (!result.data.isNullOrEmpty()) {
-                        Log.d("Matches", "GetUpcomingMatches:Result.Success")
-                        _viewState.update { state ->
-                            state.copy(
-                                matches = result.data,
-                                isPostLoading = false
-                            )
-                        }
-                        getAwayClub()
-                        getHomeClub()
-                    }
-                }
-
-                is Response.Failure -> {
-                    _viewState.update { state ->
-                        state.copy(
-                            isError = true,
-                            error = result.e?.localizedMessage
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    private suspend fun getClubs() {
-        matchesRepository.getClubs().collect { result ->
-            when (result) {
-                Response.Loading -> {
-                    _viewState.update { state ->
-                        state.copy(isPostLoading = true)
-                    }
-                }
-
-                is Response.Success -> {
-                    if (!result.data.isNullOrEmpty()) {
-                        _viewState.update { state ->
-                            state.copy(
-                                clubs = result.data,
-                                isPostLoading = false
-                            )
-                        }
-                    }
-                }
-
-                is Response.Failure -> {
-                    _viewState.update { state ->
-                        state.copy(
-                            isError = true,
-                            error = result.e?.localizedMessage
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    private fun getHomeClub() {
-        Log.d("Matches", "GetHomeClub")
-        if (!_viewState.value.clubs.isNullOrEmpty()) {
-            for (club in _viewState.value.clubs) {
-                if (club.id == _viewState.value.matches?.first()?.homeId) {
-                    _viewState.update { state ->
-                        state.copy(
-                            homeClub = club
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    private fun getAwayClub() {
-        Log.d("Matches", "GetAwayClub")
-        if (!_viewState.value.clubs.isNullOrEmpty()) {
-            for (club in _viewState.value.clubs) {
-                if (club.id == _viewState.value.matches?.first()?.awayId) {
-                    _viewState.update { state ->
-                        state.copy(
-                            awayClub = club
-                        )
                     }
                 }
             }

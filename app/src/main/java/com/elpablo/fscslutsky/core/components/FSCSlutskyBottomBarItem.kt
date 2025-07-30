@@ -3,16 +3,26 @@ package com.elpablo.fscslutsky.core.components
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.BottomAppBarDefaults
+import androidx.compose.material3.BottomAppBarScrollBehavior
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
@@ -55,8 +65,9 @@ sealed class FSCSlutskyBottomBarItem(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FSCSlutckyBottomBar(navController: NavController) {
+fun FSCSlutckyBottomBar(navController: NavController, scrollBehavior: BottomAppBarScrollBehavior) {
     val bottomBarScreens = listOf(
         FSCSlutskyBottomBarItem.Dashboard,
         FSCSlutskyBottomBarItem.Matches,
@@ -68,13 +79,14 @@ fun FSCSlutckyBottomBar(navController: NavController) {
     val bottomBarDestination = bottomBarScreens.any { it.route == currentDestination?.route }
 
     if (bottomBarDestination) {
-        NavigationBar(
+        BottomAppBar(
             modifier = Modifier
+                .padding(horizontal = 48.dp, vertical = 32.dp)
                 .graphicsLayer(
-                shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
-                clip = true
-            ),
-            containerColor = MaterialTheme.colorScheme.background
+                shape = RoundedCornerShape(32.dp), clip = true)
+            ,
+            containerColor = MaterialTheme.colorScheme.background.copy(alpha = 0.8f),
+            scrollBehavior = scrollBehavior
         ) {
             bottomBarScreens.forEach { screen ->
                 AddItem(
@@ -96,7 +108,7 @@ fun RowScope.AddItem(
     NavigationBarItem(
         icon = {
             Icon(
-                modifier = Modifier.size(32.dp),
+                //modifier = Modifier.size(32.dp),
                 painter = painterResource(screen.icon),
                 contentDescription = stringResource(screen.label)
             )
@@ -120,8 +132,9 @@ fun RowScope.AddItem(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 fun BottomBarPreview() {
-    FSCSlutckyBottomBar(navController = rememberNavController())
+    FSCSlutckyBottomBar(navController = rememberNavController(), scrollBehavior = BottomAppBarDefaults.exitAlwaysScrollBehavior())
 }

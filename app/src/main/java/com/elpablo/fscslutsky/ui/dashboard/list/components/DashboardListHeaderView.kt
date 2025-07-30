@@ -20,7 +20,7 @@ fun DashboardListHeaderView(
     onEvent: (DashboardListEvent) -> Unit,
     onNavigateToDetail: (String?) -> Unit
 ) {
-    Column(modifier = modifier.padding(top = 80.dp)) {
+    Column(Modifier.padding(top = 16.dp)) {
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             modifier = Modifier.padding(start = 32.dp),

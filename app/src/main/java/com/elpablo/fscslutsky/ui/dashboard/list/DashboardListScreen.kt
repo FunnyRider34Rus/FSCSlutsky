@@ -16,7 +16,6 @@ import com.elpablo.fscslutsky.core.components.FSCSlutskyLoader
 import com.elpablo.fscslutsky.core.utils.isScrolledToEnd
 import com.elpablo.fscslutsky.ui.dashboard.list.components.DashboardListCardView
 import com.elpablo.fscslutsky.ui.dashboard.list.components.DashboardListHeaderView
-import com.elpablo.fscslutsky.ui.dashboard.list.components.DashboardMatchTopCardView
 
 @Composable
 fun DashboardListScreen(
@@ -33,7 +32,6 @@ fun DashboardListScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 100.dp)
     ) {
         LazyColumn(
             modifier = Modifier
@@ -61,7 +59,6 @@ fun DashboardListScreen(
                 }
             }
         }
-        DashboardMatchTopCardView(uiState = uiState)
     }
     if (scrollState.isScrolledToEnd()) {
         LaunchedEffect(scrollState.isScrolledToEnd()) {

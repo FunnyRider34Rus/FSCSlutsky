@@ -18,19 +18,19 @@
 
 ## Технологический стэк
 
-- [Kotlin](https://kotlinlang.org)
-- [Kotlin K2 Compiler](https://kotlinlang.org/docs/k2-compiler-migration-guide.html)
+- [Kotlin K2](https://kotlinlang.org/docs/k2-compiler-migration-guide.html)
 - [Kotlin Symbol Processing API](https://kotlinlang.org/docs/ksp-overview.html)
 - [Google Jetpack Compose](https://developer.android.com/jetpack/compose)
 - [Google Firebase](https://firebase.google.com) используется в качестве backend
 - [Google Hilt](https://developer.android.com/training/dependency-injection/hilt-android) для dependency injection
-- [Coil](https://coil-kt.github.io/coil/) для работы с изображениями
+- [Glide](https://bumptech.github.io/glide/int/compose.html) для работы с изображениями
 - [ExoPlayer](https://developer.android.com/media/media3/exoplayer) для воспроизведения видео материалов
+- [VK API](https://id.vk.com/about/business/go/docs/ru/vkid/latest/vk-id/intro/start-page) для авторизации и запросов постов в экосистеме "VK"
 
 ## Лицензия
 
 ```
-Copyright 2024 Дуюнов Павел Владимирович (https://github.com/FunnyRider34Rus).
+Copyright 2025 Дуюнов Павел Владимирович (https://github.com/FunnyRider34Rus).
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

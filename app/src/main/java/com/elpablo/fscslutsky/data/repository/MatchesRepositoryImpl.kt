@@ -38,11 +38,29 @@ class MatchesRepositoryImpl @Inject constructor(private val firestore: FirebaseF
         emit(result)
     }
 
-    override suspend fun getUpcomingMatches(): Flow<Response<List<Match?>?>> = callbackFlow {
+    override suspend fun getUpcomingMatches(): Flow<Response<List<Match>?>> = callbackFlow {
         trySend(Loading)
         val currentDate = Date()
         val listener = firestore.collection(FIRESTORE_NODE_MATCHES)
             .whereGreaterThanOrEqualTo(FIRESTORE_NODE_NEWS_TIMESTAMP, currentDate)
+            .orderBy(FIRESTORE_NODE_NEWS_TIMESTAMP, Query.Direction.ASCENDING)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) trySend(Failure(error))
+                val response = if (snapshot != null) {
+                    Success(snapshot.toObjects(Match::class.java))
+                } else {
+                    Failure(error)
+                }
+                trySend(response)
+            }
+        awaitClose { listener.remove() }
+    }
+
+    override suspend fun getPastMatches(): Flow<Response<List<Match>?>>  = callbackFlow {
+        trySend(Loading)
+        val currentDate = Date()
+        val listener = firestore.collection(FIRESTORE_NODE_MATCHES)
+            .whereLessThan(FIRESTORE_NODE_NEWS_TIMESTAMP, currentDate)
             .orderBy(FIRESTORE_NODE_NEWS_TIMESTAMP, Query.Direction.ASCENDING)
             .addSnapshotListener { snapshot, error ->
                 if (error != null) trySend(Failure(error))

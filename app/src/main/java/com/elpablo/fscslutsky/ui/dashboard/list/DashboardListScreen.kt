@@ -1,7 +1,6 @@
 package com.elpablo.fscslutsky.ui.dashboard.list
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,7 +18,6 @@ import com.elpablo.fscslutsky.ui.dashboard.list.components.DashboardListHeaderVi
 
 @Composable
 fun DashboardListScreen(
-    modifier: Modifier = Modifier,
     snackbar: SnackbarHostState,
     uiState: DashboardListViewState,
     onEvent: (DashboardListEvent) -> Unit,
@@ -29,33 +27,29 @@ fun DashboardListScreen(
     if (uiState.isPostLoading) {
         FSCSlutskyLoader()
     }
-    Box(
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.tertiary.copy(alpha = 0.2f)),
+        state = scrollState
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.tertiary.copy(alpha = 0.2f)),
-            state = scrollState
-        ) {
-            uiState.posts?.size?.let { size ->
-                items(size) { index ->
-                    if (uiState.posts[index].isPinned == true) {
-                        DashboardListHeaderView(
-                            uiState = uiState,
-                            indexOfPost = index,
-                            onEvent = onEvent,
-                            onNavigateToDetail = onNavigateToDetail
-                        )
-                    } else {
-                        DashboardListCardView(
-                            modifier = Modifier.padding(16.dp),
-                            uiState = uiState,
-                            onEvent = onEvent,
-                            indexOfPost = index,
-                            onNavigateToDetail = onNavigateToDetail
-                        )
-                    }
+        uiState.posts?.size?.let { size ->
+            items(size) { index ->
+                if (uiState.posts[index].isPinned == true) {
+                    DashboardListHeaderView(
+                        uiState = uiState,
+                        indexOfPost = index,
+                        onEvent = onEvent,
+                        onNavigateToDetail = onNavigateToDetail
+                    )
+                } else {
+                    DashboardListCardView(
+                        modifier = Modifier.padding(16.dp),
+                        uiState = uiState,
+                        onEvent = onEvent,
+                        indexOfPost = index,
+                        onNavigateToDetail = onNavigateToDetail
+                    )
                 }
             }
         }

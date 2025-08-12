@@ -6,6 +6,7 @@ import com.elpablo.fscslutsky.domain.model.Match
 import kotlinx.coroutines.flow.Flow
 
 interface MatchesRepository {
-    suspend fun getClubs(): Flow<Response<List<Club>>>
-    suspend fun getUpcomingMatches(): Flow<Response<List<Match?>?>>
+    suspend fun getClubs(): Flow<Response<List<Club>?>>
+    suspend fun getUpcomingMatches(): Flow<Response<List<Match>?>>
+    suspend fun getPastMatches(): Flow<Response<List<Match>?>>
 }

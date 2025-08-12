@@ -1,7 +1,5 @@
 package com.elpablo.fscslutsky.ui.dashboard.list
 
-import com.elpablo.fscslutsky.domain.model.Club
-import com.elpablo.fscslutsky.domain.model.Match
 import com.elpablo.fscslutsky.domain.model.VkWall
 
 data class DashboardListViewState(

@@ -12,7 +12,6 @@ import com.elpablo.fscslutsky.ui.profile.components.UserProfileScreen
 
 @Composable
 fun ProfileScreen(
-    modifier: Modifier,
     uiState: ProfileViewState
 ) {
     val activity = LocalActivity.current

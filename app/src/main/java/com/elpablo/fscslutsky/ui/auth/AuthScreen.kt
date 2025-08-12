@@ -20,7 +20,6 @@ import com.vk.id.onetap.compose.onetap.OneTap
 
 @Composable
 fun AuthScreen(
-    modifier: Modifier,
     uiState: AuthViewState,
     uiEvent: (AuthEvent) -> Unit,
     onNavigate: () -> Unit
@@ -44,7 +43,7 @@ fun AuthScreen(
         )
     }
     Box(
-        modifier = modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomCenter
     ) {
         OneTap(

@@ -4,7 +4,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults
@@ -12,17 +11,11 @@ import androidx.compose.material3.BottomAppBarScrollBehavior
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
@@ -40,8 +33,8 @@ import com.elpablo.fscslutsky.core.navigation.Screen
 
 sealed class FSCSlutskyBottomBarItem(
     val route: String,
-    @StringRes val label: Int,
-    @DrawableRes val icon: Int
+    @param:StringRes val label: Int,
+    @param:DrawableRes val icon: Int
 ) {
     data object Dashboard : FSCSlutskyBottomBarItem(
         route = Screen.DASHBOARDLIST.route,
@@ -116,6 +109,7 @@ fun RowScope.AddItem(
         selected = currentDestination?.hierarchy?.any {
             it.route == screen.route
         } == true,
+        //label =  { Text(text = stringResource(screen.label)) },
         alwaysShowLabel = false,
         onClick = {
             navController.navigate(screen.route) {
@@ -136,5 +130,8 @@ fun RowScope.AddItem(
 @Preview
 @Composable
 fun BottomBarPreview() {
-    FSCSlutckyBottomBar(navController = rememberNavController(), scrollBehavior = BottomAppBarDefaults.exitAlwaysScrollBehavior())
+    FSCSlutckyBottomBar(
+        navController = rememberNavController(),
+        scrollBehavior = BottomAppBarDefaults.exitAlwaysScrollBehavior()
+    )
 }

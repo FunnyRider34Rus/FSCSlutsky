@@ -5,7 +5,6 @@ package com.elpablo.fscslutsky.core.navigation
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomAppBarDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -21,7 +20,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.elpablo.fscslutsky.core.components.FSCSSlutskyTitle
 import com.elpablo.fscslutsky.core.components.FSCSlutckyBottomBar
 import com.elpablo.fscslutsky.ui.auth.AuthScreen
 import com.elpablo.fscslutsky.ui.auth.AuthViewModel
@@ -30,6 +28,7 @@ import com.elpablo.fscslutsky.ui.dashboard.detail.DashboardDetailViewModel
 import com.elpablo.fscslutsky.ui.dashboard.list.DashboardListScreen
 import com.elpablo.fscslutsky.ui.dashboard.list.DashboardListViewModel
 import com.elpablo.fscslutsky.ui.matches.MatchesScreen
+import com.elpablo.fscslutsky.ui.matches.MatchesViewModel
 import com.elpablo.fscslutsky.ui.profile.ProfileScreen
 import com.elpablo.fscslutsky.ui.profile.ProfileViewModel
 import com.elpablo.fscslutsky.ui.shop.ShopScreen
@@ -76,7 +75,6 @@ fun SetupNavGraph(navController: NavHostController, startDestination: String) {
                 val viewModel = hiltViewModel<AuthViewModel>()
                 val state by viewModel.uiState.collectAsStateWithLifecycle()
                 AuthScreen(
-                    modifier = modifier.padding(paddingValues),
                     uiState = state,
                     uiEvent = viewModel::onEvent,
                     onNavigate = { navController.navigate(Screen.DASHBOARDLIST.route) }
@@ -86,7 +84,6 @@ fun SetupNavGraph(navController: NavHostController, startDestination: String) {
                 val viewModel = hiltViewModel<DashboardListViewModel>()
                 val state by viewModel.viewState.collectAsStateWithLifecycle()
                 DashboardListScreen(
-                    modifier = modifier.padding(paddingValues),
                     snackbar = snackbarHostState,
                     uiState = state,
                     onEvent = viewModel::onEvent,
@@ -100,25 +97,23 @@ fun SetupNavGraph(navController: NavHostController, startDestination: String) {
                 val viewModel = hiltViewModel<DashboardDetailViewModel>()
                 val state by viewModel.viewState.collectAsStateWithLifecycle()
                 DashboardDetailScreen(
-                    modifier = modifier.padding(paddingValues),
                     state = state,
                     onEvent = viewModel::onEvent,
                     id = id
                 )
             }
             composable(route = Screen.MATCHES.route) {
-                MatchesScreen(modifier = modifier.padding(paddingValues))
+                val viewModel = hiltViewModel<MatchesViewModel>()
+                val state by viewModel.viewState.collectAsStateWithLifecycle()
+                MatchesScreen(uiState = state)
             }
             composable(route = Screen.SHOP.route) {
-                ShopScreen(modifier = modifier.padding(paddingValues))
+                ShopScreen()
             }
             composable(route = Screen.PROFILE.route) {
                 val viewModel = hiltViewModel<ProfileViewModel>()
                 val state by viewModel.uiState.collectAsStateWithLifecycle()
-                ProfileScreen(
-                    modifier = modifier.padding(paddingValues),
-                    uiState = state
-                )
+                ProfileScreen(uiState = state)
             }
         }
     }

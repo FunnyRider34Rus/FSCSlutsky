@@ -1,5 +1,7 @@
 package com.elpablo.fscslutsky.core.components
 
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -9,29 +11,30 @@ import androidx.compose.ui.Modifier
 @Composable
 fun FSCSlutskyAlertDialog(
     modifier: Modifier = Modifier,
-    onDismissRequest: () -> Unit,
-    onConfirmation: () -> Unit,
+    onConfirmation: () -> Unit = {  },
+    onDismissRequest: () -> Unit = {  },
+    title: String = "Ошибка",
+    buttonText: String = "Закрыть",
     dialogText: String
 ) {
     AlertDialog(
         modifier = modifier,
-        onDismissRequest = {
-            onDismissRequest()
-        },
+        onDismissRequest = onDismissRequest,
         confirmButton = {
             TextButton(
-                onClick = {
-                    onConfirmation()
-                }
+                onClick = onConfirmation
             ) {
-                Text("Выйти")
+                Text(text = buttonText)
             }
         },
         title = {
-            Text(text = "Ошибка")
+            Text(text = title)
         },
         text = {
-            Text(text = dialogText)
+            Text(
+                modifier = Modifier.verticalScroll(state = rememberScrollState()),
+                text = dialogText
+            )
         }
     )
 }

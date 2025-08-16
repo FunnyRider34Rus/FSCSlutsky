@@ -4,7 +4,6 @@ package com.elpablo.fscslutsky.ui.matches.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -37,19 +36,14 @@ fun MatchesPastInfo(modifier: Modifier = Modifier, match: FullMatchInfo) {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Box(
-            modifier = Modifier.size(64.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            GlideImage(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .padding(8.dp),
-                model = match.homeClub?.logo,
-                contentDescription = null,
-                contentScale = ContentScale.Inside
-            )
-        }
+        GlideImage(
+            modifier = Modifier
+                .size(64.dp)
+                .padding(8.dp),
+            model = match.homeClub?.logo,
+            contentDescription = null,
+            contentScale = ContentScale.Inside
+        )
         Text(
             text = match.homeScore.toString(),
             style = MaterialTheme.typography.titleLarge,
@@ -78,18 +72,13 @@ fun MatchesPastInfo(modifier: Modifier = Modifier, match: FullMatchInfo) {
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.primary
         )
-        Box(
-            modifier = Modifier.size(64.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            GlideImage(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .padding(4.dp),
-                model = match.awayClub?.logo,
-                contentDescription = null,
-                contentScale = ContentScale.Inside
-            )
-        }
+        GlideImage(
+            modifier = Modifier
+                .size(64.dp)
+                .padding(4.dp),
+            model = match.awayClub?.logo,
+            contentDescription = null,
+            contentScale = ContentScale.Inside
+        )
     }
 }

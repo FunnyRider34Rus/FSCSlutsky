@@ -86,7 +86,7 @@ class DashboardDetailViewModel @Inject constructor(private val repository: VkSDK
         }
     }
 
-    fun onEvent(event: DashboardDetailEvent) {
+    fun uiEvent(event: DashboardDetailEvent) {
         when (event) {
             is DashboardDetailEvent.GetVideoByID -> {
                 getVideo(event.id, event.indexOfAttachment)

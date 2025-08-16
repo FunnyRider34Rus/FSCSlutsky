@@ -11,12 +11,11 @@ plugins {
 
 android {
     namespace = "com.elpablo.fscslutsky"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.elpablo.fscslutsky"
         minSdk = 24
-        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

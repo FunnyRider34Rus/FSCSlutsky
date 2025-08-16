@@ -14,7 +14,7 @@ class AuthViewModel @Inject constructor() : ViewModel() {
     private val _uiState = MutableStateFlow(AuthViewState())
     val uiState: StateFlow<AuthViewState> get() = _uiState.asStateFlow()
 
-    fun onEvent(event: AuthEvent) = viewModelScope.launch(Dispatchers.IO) {
+    fun uiEvent(event: AuthEvent) = viewModelScope.launch(Dispatchers.IO) {
         when (event) {
             is AuthEvent.AuthSuccess -> {
                 _uiState.update { it.copy(isLoading = false, isLoggedIn = true) }

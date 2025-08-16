@@ -8,8 +8,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
@@ -17,15 +19,23 @@ import com.elpablo.fscslutsky.core.components.FSCSlutskyLoader
 import com.elpablo.fscslutsky.ui.matches.components.MatchesActualInfo
 import com.elpablo.fscslutsky.ui.matches.components.MatchesPastInfo
 import com.elpablo.fscslutsky.ui.matches.components.MatchesUpcomingInfo
+import kotlinx.coroutines.launch
 import java.util.Date
 
 @Composable
 fun MatchesScreen(
+    snackbar: SnackbarHostState,
     uiState: MatchesViewState
 ) {
     val scrollState = rememberLazyListState()
+    val scope = rememberCoroutineScope()
     if (uiState.isLoading) {
         FSCSlutskyLoader()
+    }
+    if (uiState.isError) {
+        LaunchedEffect(null) {
+            uiState.error?.let { msg -> snackbar.showSnackbar(msg) }
+        }
     }
     LazyColumn(
         modifier = Modifier
@@ -38,12 +48,8 @@ fun MatchesScreen(
                 uiState.matches[index].date?.toDate()?.let { date ->
                     if (index == uiState.index) {
                         MatchesActualInfo(
-                            modifier = Modifier.padding(8.dp),
                             match = uiState.matches[index]
                         )
-                        LaunchedEffect(uiState.index) {
-                            scrollState.animateScrollToItem(uiState.index)
-                        }
                     } else if (date < Date()) {
                         MatchesPastInfo(
                             modifier = Modifier.padding(8.dp),
@@ -57,6 +63,9 @@ fun MatchesScreen(
                     }
                 }
             }
+        }
+        scope.launch {
+            scrollState.animateScrollToItem(uiState.index)
         }
     }
 }

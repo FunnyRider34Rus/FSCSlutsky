@@ -32,7 +32,7 @@ class DashboardListViewModel @Inject constructor(
         getPosts()
     }
 
-    fun onEvent(event: DashboardListEvent) {
+    fun uiEvent(event: DashboardListEvent) {
         when (event) {
             is DashboardListEvent.NextRequest -> {
                 getPosts()

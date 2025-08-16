@@ -20,7 +20,7 @@ import com.elpablo.fscslutsky.ui.dashboard.list.components.DashboardListHeaderVi
 fun DashboardListScreen(
     snackbar: SnackbarHostState,
     uiState: DashboardListViewState,
-    onEvent: (DashboardListEvent) -> Unit,
+    uiEvent: (DashboardListEvent) -> Unit,
     onNavigateToDetail: (String?) -> Unit
 ) {
     val scrollState = rememberLazyListState()
@@ -39,14 +39,14 @@ fun DashboardListScreen(
                     DashboardListHeaderView(
                         uiState = uiState,
                         indexOfPost = index,
-                        onEvent = onEvent,
+                        onEvent = uiEvent,
                         onNavigateToDetail = onNavigateToDetail
                     )
                 } else {
                     DashboardListCardView(
                         modifier = Modifier.padding(16.dp),
                         uiState = uiState,
-                        onEvent = onEvent,
+                        onEvent = uiEvent,
                         indexOfPost = index,
                         onNavigateToDetail = onNavigateToDetail
                     )
@@ -56,7 +56,7 @@ fun DashboardListScreen(
     }
     if (scrollState.isScrolledToEnd()) {
         LaunchedEffect(scrollState.isScrolledToEnd()) {
-            onEvent(DashboardListEvent.NextRequest)
+            uiEvent(DashboardListEvent.NextRequest)
         }
     }
     if (uiState.isError) {

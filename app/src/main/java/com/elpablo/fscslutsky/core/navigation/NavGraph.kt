@@ -2,9 +2,8 @@
 
 package com.elpablo.fscslutsky.core.navigation
 
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomAppBarDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -46,37 +45,15 @@ fun SetupNavGraph(navController: NavHostController, startDestination: String) {
         NavHost(
             navController = navController,
             startDestination = startDestination,
-            enterTransition = {
-                slideIntoContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Left,
-                    animationSpec = tween(500)
-                )
-            },
-            exitTransition = {
-                slideOutOfContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Left,
-                    animationSpec = tween(500)
-                )
-            },
-            popEnterTransition = {
-                slideIntoContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Right,
-                    animationSpec = tween(500)
-                )
-            },
-            popExitTransition = {
-                slideOutOfContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Right,
-                    animationSpec = tween(500)
-                )
-            }
         ) {
+            modifier.padding(paddingValues)
             composable(route = Screen.AUTH.route) {
                 val viewModel = hiltViewModel<AuthViewModel>()
                 val state by viewModel.uiState.collectAsStateWithLifecycle()
                 AuthScreen(
+                    snackbar = snackbarHostState,
                     uiState = state,
-                    uiEvent = viewModel::onEvent,
+                    uiEvent = viewModel::uiEvent,
                     onNavigate = { navController.navigate(Screen.DASHBOARDLIST.route) }
                 )
             }
@@ -86,7 +63,7 @@ fun SetupNavGraph(navController: NavHostController, startDestination: String) {
                 DashboardListScreen(
                     snackbar = snackbarHostState,
                     uiState = state,
-                    onEvent = viewModel::onEvent,
+                    uiEvent = viewModel::uiEvent,
                     onNavigateToDetail = { id ->
                         navController.navigate(Screen.DASHBOARDDETAIL.route + "/$id")
                     }
@@ -97,15 +74,18 @@ fun SetupNavGraph(navController: NavHostController, startDestination: String) {
                 val viewModel = hiltViewModel<DashboardDetailViewModel>()
                 val state by viewModel.viewState.collectAsStateWithLifecycle()
                 DashboardDetailScreen(
-                    state = state,
-                    onEvent = viewModel::onEvent,
+                    uiState = state,
+                    uiEvent = viewModel::uiEvent,
                     id = id
                 )
             }
             composable(route = Screen.MATCHES.route) {
                 val viewModel = hiltViewModel<MatchesViewModel>()
                 val state by viewModel.viewState.collectAsStateWithLifecycle()
-                MatchesScreen(uiState = state)
+                MatchesScreen(
+                    snackbar = snackbarHostState,
+                    uiState = state
+                )
             }
             composable(route = Screen.SHOP.route) {
                 ShopScreen()
@@ -113,7 +93,11 @@ fun SetupNavGraph(navController: NavHostController, startDestination: String) {
             composable(route = Screen.PROFILE.route) {
                 val viewModel = hiltViewModel<ProfileViewModel>()
                 val state by viewModel.uiState.collectAsStateWithLifecycle()
-                ProfileScreen(uiState = state)
+                ProfileScreen(
+                    snackbar = snackbarHostState,
+                    uiState = state,
+                    uiEvent = viewModel::uiEvent
+                )
             }
         }
     }

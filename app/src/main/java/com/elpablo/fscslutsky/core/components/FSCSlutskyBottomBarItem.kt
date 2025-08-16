@@ -41,16 +41,19 @@ sealed class FSCSlutskyBottomBarItem(
         label = R.string.bottom_bar_dashboard_label,
         icon = R.drawable.dashboard_outline
     )
+
     data object Matches : FSCSlutskyBottomBarItem(
         route = Screen.MATCHES.route,
         label = R.string.bottom_bar_matches_label,
         icon = R.drawable.matches_outline
     )
+
     data object Shop : FSCSlutskyBottomBarItem(
         route = Screen.SHOP.route,
         label = R.string.bottom_bar_shop_label,
         icon = R.drawable.shop_outline
     )
+
     data object Profile : FSCSlutskyBottomBarItem(
         route = Screen.PROFILE.route,
         label = R.string.bottom_bar_profile_label,
@@ -76,8 +79,8 @@ fun FSCSlutckyBottomBar(navController: NavController, scrollBehavior: BottomAppB
             modifier = Modifier
                 .padding(horizontal = 48.dp, vertical = 32.dp)
                 .graphicsLayer(
-                shape = RoundedCornerShape(32.dp), clip = true)
-            ,
+                    shape = RoundedCornerShape(32.dp), clip = true
+                ),
             containerColor = MaterialTheme.colorScheme.background.copy(alpha = 0.8f),
             scrollBehavior = scrollBehavior
         ) {
@@ -112,9 +115,11 @@ fun RowScope.AddItem(
         //label =  { Text(text = stringResource(screen.label)) },
         alwaysShowLabel = false,
         onClick = {
-            navController.navigate(screen.route) {
-                popUpTo(navController.graph.findStartDestination().id)
-                launchSingleTop = true
+            if (screen.route != currentDestination?.route) {
+                navController.navigate(screen.route) {
+                    popUpTo(navController.graph.findStartDestination().id)
+                    //launchSingleTop = true
+                }
             }
         },
         colors = NavigationBarItemDefaults.colors(

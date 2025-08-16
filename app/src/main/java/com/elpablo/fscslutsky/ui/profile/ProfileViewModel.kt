@@ -1,11 +1,12 @@
 package com.elpablo.fscslutsky.ui.profile
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.elpablo.fscslutsky.domain.model.User
 import com.vk.id.VKID
 import com.vk.id.VKIDUser
+import com.vk.id.logout.VKIDLogoutCallback
+import com.vk.id.logout.VKIDLogoutFail
 import com.vk.id.refreshuser.VKIDGetUserCallback
 import com.vk.id.refreshuser.VKIDGetUserFail
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -44,7 +45,6 @@ class ProfileViewModel @Inject constructor(private val currentUser: User?) : Vie
                     }
 
                     override fun onFail(fail: VKIDGetUserFail) {
-                        Log.d("VKID", "GetUserInfoFailed: $fail.description")
                         _uiState.update { state ->
                             state.copy(
                                 isLoading = false,
@@ -55,6 +55,65 @@ class ProfileViewModel @Inject constructor(private val currentUser: User?) : Vie
                     }
                 }
             )
+        }
+    }
+
+    fun uiEvent(event: ProfileEvent) {
+        when (event) {
+            is ProfileEvent.logout -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    VKID.instance.logout(
+                        callback = object : VKIDLogoutCallback {
+                            override fun onSuccess() {
+                                _uiState.update { state ->
+                                    state.copy(
+                                        isLogout = true
+                                    )
+                                }
+                            }
+
+                            override fun onFail(fail: VKIDLogoutFail) {
+                                _uiState.update { state ->
+                                    state.copy(
+                                        isLoading = false,
+                                        isError = true,
+                                        error = fail.description
+                                    )
+                                }
+                            }
+                        }
+                    )
+                }
+            }
+
+            ProfileEvent.hideAboutApp -> {
+                _uiState.update { state ->
+                    state.copy(
+                        isAboutApp = false
+                    )
+                }
+            }
+            ProfileEvent.hideLicensing -> {
+                _uiState.update { state ->
+                    state.copy(
+                        isLicensing = false
+                    )
+                }
+            }
+            ProfileEvent.showAboutApp -> {
+                _uiState.update { state ->
+                    state.copy(
+                        isAboutApp = true
+                    )
+                }
+            }
+            ProfileEvent.showLicensing -> {
+                _uiState.update { state ->
+                    state.copy(
+                        isLicensing = true
+                    )
+                }
+            }
         }
     }
 }
